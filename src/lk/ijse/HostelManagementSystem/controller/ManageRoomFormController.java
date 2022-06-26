@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -19,6 +20,7 @@ import javafx.util.Duration;
 import lk.ijse.HostelManagementSystem.business.BOFactory;
 import lk.ijse.HostelManagementSystem.business.custom.RoomBO;
 import lk.ijse.HostelManagementSystem.dto.RoomDTO;
+import lk.ijse.HostelManagementSystem.validation.ValidationUtil;
 import lk.ijse.HostelManagementSystem.view.tm.RoomTM;
 import org.controlsfx.control.Notifications;
 
@@ -26,8 +28,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class ManageRoomFormController {
     public AnchorPane roomsContext;
@@ -47,6 +51,7 @@ public class ManageRoomFormController {
     public Label lblTime;
 
     private final RoomBO roomBO = (RoomBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ROOM);
+    LinkedHashMap<TextField, Pattern> map = new LinkedHashMap<>();
 
     public void initialize(){
 
@@ -78,6 +83,15 @@ public class ManageRoomFormController {
         initialUI();
 
         //----------------------Validation----------------------------------
+        Pattern roomTypeIdPattern = Pattern.compile("^(RM-)[0-9]{4}$");
+        Pattern roomTypePattern = Pattern.compile("^(Non-AC|Non-AC/Food|AC|AC/Food)$");
+        Pattern keyMoneyPattern = Pattern.compile("^[1-9][0-9]*(.[0-9]{1,2})?$");
+        Pattern qtyPattern = Pattern.compile("^[1-9][0-9]{0,2}$");
+
+        map.put(txtRoomTypeID,roomTypeIdPattern);
+        map.put(txtRoomType,roomTypePattern);
+        map.put(txtKeyMoney,keyMoneyPattern);
+        map.put(txtQty,qtyPattern);
 
 
         try {
@@ -207,6 +221,16 @@ public class ManageRoomFormController {
     }
 
     public void textFields_Key_Released(KeyEvent keyEvent) {
+        ValidationUtil.validate(map,btnSave);
+
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            Object response =  ValidationUtil.validate(map,btnSave);;
+
+            if (response instanceof TextField) {
+                TextField textField = (TextField) response;
+                textField.requestFocus();
+            }
+        }
     }
 
     public void backToDashBoardOnAction(MouseEvent event) throws IOException {
