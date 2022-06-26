@@ -101,6 +101,15 @@ public class StudentFormController {
         initialUI();
 
         //----------------------------Validation--------------------------------------------
+        Pattern idPattern = Pattern.compile("^(P/|G/)[1-9][0-9]{3,5}$");
+        Pattern namePattern = Pattern.compile("^[A-z ]{3,25}$");
+        Pattern addressPattern = Pattern.compile("^[A-z0-9 ,/]{4,40}$");
+        Pattern contactNoPattern = Pattern.compile("^(011|070|071|072|074|075|076|077|078)[0-9]{7}$");
+
+        map.put(txtStudentId,idPattern);
+        map.put(txtStudentName,namePattern);
+        map.put(txtAddress,addressPattern);
+        map.put(txtContactNo,contactNoPattern);
 
 
         try {
