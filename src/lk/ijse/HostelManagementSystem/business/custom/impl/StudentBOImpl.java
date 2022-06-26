@@ -18,7 +18,6 @@ public class StudentBOImpl implements StudentBO {
     public List<StudentDTO> getAllStudents() throws Exception {
         List<Student> all = studentDAO.findAll();
         List<StudentDTO> allStudents = new ArrayList<>();
-        //ArrayList<StudentDTO> allStudents = new ArrayList<>();
         for (Student student:all) {
             allStudents.add(new StudentDTO(student.getStudent_id(),student.getName(),student.getAddress(),student.getContact_no(),student.getDob(),student.getGender()));
         }

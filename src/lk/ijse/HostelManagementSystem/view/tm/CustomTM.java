@@ -29,4 +29,14 @@ public class CustomTM {
     //private String student_id;
     // private String room_type_id;
     private String status;
+
+    public CustomTM(String student_id, String name, String contact_no, String res_id, String room_type_id, Date date, String status) {
+        this.student_id = student_id;
+        this.name = name;
+        this.contact_no = contact_no;
+        this.res_id = res_id;
+        this.room_type_id = room_type_id;
+        this.date = date;
+        this.status = status;
+    }
 }
