@@ -57,10 +57,10 @@
       <TableView fx:id="tblRoom" layoutX="20.0" layoutY="252.0" prefHeight="328.0" prefWidth="707.0">
          <columns>
             <TableColumn fx:id="colId" prefWidth="122.0" text="Room ID" />
-            <TableColumn fx:id="colType" prefWidth="256.0" text="Room Type" />
-            <TableColumn fx:id="colKeyMoney" prefWidth="146.0" text="Key Money" />
-            <TableColumn fx:id="colQty" prefWidth="95.0" text="Qty" />
-            <TableColumn fx:id="colDelete" prefWidth="85.0" text="Delete" />
+            <TableColumn fx:id="colType" prefWidth="235.0" text="Room Type" />
+            <TableColumn fx:id="colKeyMoney" prefWidth="142.0" text="Key Money" />
+            <TableColumn fx:id="colQty" prefWidth="103.0" text="Qty" />
+            <TableColumn fx:id="colDelete" prefWidth="102.0" text="Delete" />
          </columns>
       </TableView>
       <JFXButton fx:id="btnSave" buttonType="RAISED" layoutX="627.0" layoutY="179.0" onAction="#btnSaveRoomOnAction" prefHeight="40.0" prefWidth="106.0" style="-fx-background-color: #18964d;" text="Save" textFill="WHITE">
