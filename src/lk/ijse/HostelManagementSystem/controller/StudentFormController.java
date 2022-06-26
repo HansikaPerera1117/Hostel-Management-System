@@ -120,6 +120,22 @@ public class StudentFormController {
 
     }
 
+    private void initialUI() {
+        txtStudentId.clear();
+        txtStudentName.clear();
+        txtAddress.clear();
+        txtContactNo.clear();
+        dtDOB.getEditor().clear();
+        cmbGender.getSelectionModel().clearSelection();
+        txtStudentId.setDisable(true);
+        txtStudentName.setDisable(true);
+        txtAddress.setDisable(true);
+        txtContactNo.setDisable(true);
+        dtDOB.setDisable(true);
+        cmbGender.setDisable(true);
+        btnSave.setDisable(true);
+    }
+
     private void loadAllStudents() throws Exception {
         tblStudent.getItems().clear();
 
@@ -161,22 +177,6 @@ public class StudentFormController {
 
           });
         }
-    }
-
-    private void initialUI() {
-        txtStudentId.clear();
-        txtStudentName.clear();
-        txtAddress.clear();
-        txtContactNo.clear();
-        dtDOB.getEditor().clear();
-        cmbGender.getSelectionModel().clearSelection();
-        txtStudentId.setDisable(true);
-        txtStudentName.setDisable(true);
-        txtAddress.setDisable(true);
-        txtContactNo.setDisable(true);
-        dtDOB.setDisable(true);
-        cmbGender.setDisable(true);
-        btnSave.setDisable(true);
     }
 
     public void btnNewStudentOnAction(ActionEvent actionEvent) {

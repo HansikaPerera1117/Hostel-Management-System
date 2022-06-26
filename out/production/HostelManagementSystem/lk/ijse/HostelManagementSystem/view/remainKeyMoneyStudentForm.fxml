@@ -21,17 +21,17 @@
             <Image url="@assests/images/Dashboard.png" />
          </image>
       </ImageView>
-      <Label fx:id="lblDate" layoutX="610.0" layoutY="25.0" text="Date :2022-11-05">
+      <Label fx:id="lblDate" layoutX="668.0" layoutY="25.0" text="Date :2022-11-05">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblTime" layoutX="634.0" layoutY="50.0" text="Time:10.30.00">
+      <Label fx:id="lblTime" layoutX="692.0" layoutY="50.0" text="Time:10.30.00">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Separator layoutX="19.0" layoutY="80.0" prefHeight="3.0" prefWidth="715.0" />
+      <Separator layoutX="16.0" layoutY="78.0" prefHeight="5.0" prefWidth="772.0" />
       <TableView fx:id="tblRemainingKeyMoney" layoutX="19.0" layoutY="111.0" prefHeight="400.0" prefWidth="764.0">
          <columns>
             <TableColumn fx:id="colId" prefWidth="83.0" text="Student ID" />

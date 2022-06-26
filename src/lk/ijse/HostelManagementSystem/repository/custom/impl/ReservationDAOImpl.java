@@ -17,17 +17,17 @@ public class ReservationDAOImpl implements ReservationDAO {
     }
 
     @Override
-    public boolean delete(String s) throws Exception {
+    public boolean delete(String id) throws Exception {
         return false;
     }
 
     @Override
-    public boolean exist(String s) throws Exception {
+    public boolean exist(String id) throws Exception {
         return false;
     }
 
     @Override
-    public Reservation find(String s) throws Exception {
+    public Reservation find(String id) throws Exception {
         return null;
     }
 

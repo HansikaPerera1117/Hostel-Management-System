@@ -8,20 +8,27 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.HostelManagementSystem.business.BOFactory;
+import lk.ijse.HostelManagementSystem.business.SuperBO;
+import lk.ijse.HostelManagementSystem.business.custom.RoomBO;
+import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.view.tm.RoomTM;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
 public class ManageRoomFormController {
     public AnchorPane roomsContext;
@@ -40,9 +47,44 @@ public class ManageRoomFormController {
     public Label lblDate;
     public Label lblTime;
 
+    private final RoomBO roomBO = (RoomBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ROOM);
 
     public void initialize(){
+
+        colId.setCellValueFactory(new PropertyValueFactory<>("room_type_id"));
+        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colKeyMoney.setCellValueFactory(new PropertyValueFactory<>("key_money"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colDelete.setCellValueFactory(new PropertyValueFactory<>("btn"));
+
         loadDateAndTime();
+        initialUI();
+
+        try {
+            loadAllRooms();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadAllRooms() throws Exception {
+        List<RoomDTO> allRooms = roomBO.getAllRooms();
+        for (RoomDTO dto:allRooms) {
+            Button btn = new Button("Delete");
+            tblRoom.getItems().add(new RoomTM(dto.getRoom_type_id(),dto.getType(),dto.getKey_money(),dto.getQty(),btn));
+        }
+    }
+
+    private void initialUI() {
+        txtRoomTypeID.clear();
+        txtRoomType.clear();
+        txtKeyMoney.clear();
+        txtQty.clear();
+        txtRoomTypeID.setDisable(true);
+        txtRoomType.setDisable(true);
+        txtKeyMoney.setDisable(true);
+        txtQty.setDisable(true);
+        btnSave.setDisable(true);
     }
 
 
@@ -50,6 +92,22 @@ public class ManageRoomFormController {
     }
 
     public void btnNewRoomOnAction(ActionEvent actionEvent) {
+        txtRoomTypeID.setEditable(true);
+        txtRoomTypeID.setDisable(false);
+        txtRoomType.setDisable(false);
+        txtKeyMoney.setDisable(false);
+        txtQty.setDisable(false);
+        txtRoomTypeID.clear();
+        txtRoomType.clear();
+        txtKeyMoney.clear();
+        txtQty.clear();
+        txtRoomTypeID.requestFocus();
+        btnSave.setDisable(false);
+        btnSave.setText("Save");
+        tblRoom.getSelectionModel().clearSelection();
+    }
+
+    public void textFields_Key_Released(KeyEvent keyEvent) {
     }
 
     public void backToDashBoardOnAction(MouseEvent event) throws IOException {
@@ -61,9 +119,6 @@ public class ManageRoomFormController {
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/lk/ijse/HostelManagementSystem/view/"+location+".fxml"))));
         stage.setTitle(location);
         stage.centerOnScreen();
-    }
-
-    public void textFields_Key_Released(KeyEvent keyEvent) {
     }
 
     private void loadDateAndTime() {
