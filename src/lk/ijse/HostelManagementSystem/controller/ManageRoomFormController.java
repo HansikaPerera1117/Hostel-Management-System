@@ -57,8 +57,29 @@ public class ManageRoomFormController {
         colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
         colDelete.setCellValueFactory(new PropertyValueFactory<>("btn"));
 
+        tblRoom.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            btnSave.setText(newValue != null ? "Update" : "Save");
+            btnSave.setDisable(newValue == null);
+
+            if (newValue != null){
+                txtRoomTypeID.setText(newValue.getRoom_type_id());
+                txtRoomTypeID.setEditable(false);
+                txtRoomType.setText(newValue.getType());
+                txtKeyMoney.setText(newValue.getKey_money());
+                txtQty.setText(String.valueOf(newValue.getQty()));
+
+                txtRoomTypeID.setDisable(false);
+                txtRoomType.setDisable(false);
+                txtKeyMoney.setDisable(false);
+                txtQty.setDisable(false);
+            }
+        });
+
         loadDateAndTime();
         initialUI();
+
+        //----------------------Validation----------------------------------
+
 
         try {
             loadAllRooms();
@@ -185,7 +206,6 @@ public class ManageRoomFormController {
             e.printStackTrace();
         }
     }
-
 
     public void textFields_Key_Released(KeyEvent keyEvent) {
     }
