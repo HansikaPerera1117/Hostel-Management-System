@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="searchRegistrationContext" prefHeight="791.0" prefWidth="1145.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.HostelManagementSystem.controller.SearchRegistrationFormController">
+   <children>
+      <Label layoutX="95.0" layoutY="26.0" text="Search Registration" textFill="#4f0000">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="56.0" fitWidth="42.0" layoutX="24.0" layoutY="25.0" onMouseClicked="#backToDashBoardOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/Dashboard.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblDate" layoutX="999.0" layoutY="25.0" text="Date :2022-11-05">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTime" layoutX="1023.0" layoutY="50.0" text="Time:10.30.00">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Separator layoutX="18.0" layoutY="82.0" prefHeight="0.0" prefWidth="1110.0" />
+      <JFXComboBox fx:id="cmbRegID" focusColor="BLACK" labelFloat="true" layoutX="31.0" layoutY="140.0" prefHeight="31.0" prefWidth="111.0" promptText="Reg_ID :" visibleRowCount="5" />
+      <JFXButton fx:id="btnUpdate" buttonType="RAISED" layoutX="989.0" layoutY="386.0" onAction="#btnUpdateOnAction" prefHeight="26.0" prefWidth="111.0" style="-fx-background-color: #4f0000;" text="Update" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnConfirmEdits" buttonType="RAISED" layoutX="970.0" layoutY="720.0" onAction="#btnConfirmEditsOnAction" prefHeight="40.0" prefWidth="137.0" style="-fx-background-color: #18964d;" text="Confirm Edits" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnCancel" buttonType="RAISED" layoutX="829.0" layoutY="720.0" onAction="#btnCancelOnAction" prefHeight="40.0" prefWidth="129.0" style="-fx-background-color: #c93333;" text="Cancel" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnRemoveReservation" buttonType="RAISED" layoutX="44.0" layoutY="720.0" onAction="#btnRemoveReservationOnAction" prefHeight="40.0" prefWidth="198.0" style="-fx-background-color: #2da4c4;" text="Remove Reservation" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <Label fx:id="lblStudentID" layoutX="879.0" layoutY="116.0" prefHeight="32.0" prefWidth="250.0" text="Student ID :P/1443">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblRegID" layoutX="402.0" layoutY="116.0" prefHeight="32.0" prefWidth="216.0" text="Reg_ID : R00-001">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <JFXComboBox fx:id="cmbStudentID" focusColor="BLACK" labelFloat="true" layoutX="223.0" layoutY="140.0" prefHeight="31.0" prefWidth="129.0" promptText="Student ID :" visibleRowCount="5" />
+      <Label fx:id="lblRegDate" layoutX="633.0" layoutY="118.0" prefHeight="32.0" prefWidth="225.0" text="Reg date :2022-11-17">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="28.0" layoutY="96.0" prefHeight="31.0" prefWidth="137.0" text="Search Reservation " />
+      <Label layoutX="221.0" layoutY="96.0" prefHeight="31.0" prefWidth="123.0" text="Search Student " />
+      <TableView fx:id="tblSearchReservation" layoutX="43.0" layoutY="440.0" prefHeight="254.0" prefWidth="1060.0">
+         <columns>
+            <TableColumn fx:id="colRegID" prefWidth="149.0" text="Reg_ID" />
+            <TableColumn fx:id="colDate" prefWidth="196.0" text="Date" />
+            <TableColumn fx:id="colStudentID" prefWidth="189.0" text="Student ID" />
+            <TableColumn fx:id="colRoomTypeID" prefWidth="198.0" text="Room Type ID" />
+            <TableColumn fx:id="colStatus" prefWidth="207.0" text="Status" />
+            <TableColumn fx:id="colDelete" prefWidth="120.0" text="Delete" />
+         </columns>
+      </TableView>
+      <JFXTextField fx:id="txtStudentName" focusColor="BLACK" labelFloat="true" layoutX="402.0" layoutY="182.0" prefHeight="38.0" prefWidth="677.0" promptText="Student Name :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtKeyMoney" focusColor="BLACK" labelFloat="true" layoutX="402.0" layoutY="330.0" prefHeight="38.0" prefWidth="323.0" promptText="Key Money :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtRoomType" focusColor="BLACK" labelFloat="true" layoutX="756.0" layoutY="255.0" prefHeight="38.0" prefWidth="323.0" promptText="Room Type :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtStatus" focusColor="BLACK" labelFloat="true" layoutX="759.0" layoutY="330.0" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="323.0" promptText="Status :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtRoomTypeID" focusColor="BLACK" labelFloat="true" layoutX="402.0" layoutY="255.0" prefHeight="38.0" prefWidth="323.0" promptText="Room Type ID :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
+      <Separator layoutX="185.0" layoutY="98.0" orientation="VERTICAL" prefHeight="315.0" prefWidth="8.0">
+         <effect>
+            <ColorAdjust brightness="-0.45" contrast="0.23" />
+         </effect>
+      </Separator>
+      <Separator layoutX="376.0" layoutY="98.0" orientation="VERTICAL" prefHeight="315.0" prefWidth="8.0">
+         <effect>
+            <ColorAdjust brightness="-0.45" contrast="0.23" />
+         </effect>
+      </Separator>
+   </children>
+</AnchorPane>

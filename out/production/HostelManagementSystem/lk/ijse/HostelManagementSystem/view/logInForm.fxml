@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="logInContext" prefHeight="507.0" prefWidth="824.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.HostelManagementSystem.controller.LogInFormController">
+   <children>
+      <ImageView fitHeight="507.0" fitWidth="457.0" pickOnBounds="true">
+         <image>
+            <Image url="@assests/images/login_bg.jpg" />
+         </image>
+      </ImageView>
+      <JFXTextField fx:id="txtUserName" focusColor="#4f0000" layoutX="473.0" layoutY="239.0" prefHeight="50.0" prefWidth="336.0" promptText="User Name" unFocusColor="#4f0000">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXPasswordField fx:id="pwdPassword" focusColor="#4f0000" layoutX="474.0" layoutY="316.0" prefHeight="50.0" prefWidth="336.0" promptText="Password" unFocusColor="#4f0000">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXPasswordField>
+      <ImageView fitHeight="93.0" fitWidth="94.0" layoutX="587.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/User.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="474.0" layoutY="14.0" text="LogIn" textFill="#4f0000">
+         <font>
+            <Font name="Malgun Gothic Bold" size="40.0" />
+         </font>
+      </Label>
+      <Separator layoutX="472.0" layoutY="79.0" prefHeight="0.0" prefWidth="336.0">
+         <effect>
+            <ColorAdjust />
+         </effect>
+      </Separator>
+      <JFXButton buttonType="RAISED" layoutX="680.0" layoutY="433.0" onAction="#btnLogInOnAction" prefHeight="43.0" prefWidth="124.0" style="-fx-background-color: #4F0000;" text="LogIn" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

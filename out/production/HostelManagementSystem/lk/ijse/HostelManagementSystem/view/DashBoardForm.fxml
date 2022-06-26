@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="dashBoardContext" prefHeight="651.0" prefWidth="583.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.HostelManagementSystem.controller.DashBoardFormController">
+   <children>
+      <ImageView fx:id="imgAddRegistration" fitHeight="130.0" fitWidth="130.0" layoutX="90.0" layoutY="130.0" onMouseClicked="#navigationOnAction" onMouseEntered="#MouseEnteredOnAction" onMouseExited="#MouseExitedOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/add_registration.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgManageRoom" fitHeight="130.0" fitWidth="130.0" layoutX="360.0" layoutY="130.0" onMouseClicked="#navigationOnAction" onMouseEntered="#MouseEnteredOnAction" onMouseExited="#MouseExitedOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/room.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgSearchRegistration" fitHeight="130.0" fitWidth="130.0" layoutX="90.0" layoutY="430.0" onMouseClicked="#navigationOnAction" onMouseEntered="#MouseEnteredOnAction" onMouseExited="#MouseExitedOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/search_registration.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgRemainKeyMoney" fitHeight="130.0" fitWidth="130.0" layoutX="360.0" layoutY="430.0" onMouseClicked="#navigationOnAction" onMouseEntered="#MouseEnteredOnAction" onMouseExited="#MouseExitedOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/remain_key_money.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblMenu" alignment="CENTER" layoutX="5.0" layoutY="301.0" prefHeight="36.0" prefWidth="574.0" text="Welcome">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDescription" alignment="CENTER" layoutX="1.0" layoutY="342.0" prefHeight="25.0" prefWidth="574.0" text="Please select one of main operations to proceed">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="473.0" layoutY="611.0" onMouseClicked="#logOutOnAction" text="LogOut">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="1.0" layoutY="24.0" prefHeight="51.0" prefWidth="583.0" text="Hostel Management System" textFill="#4f0000">
+         <font>
+            <Font name="System Bold" size="35.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="30.0" fitWidth="27.0" layoutX="546.0" layoutY="612.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/logout.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

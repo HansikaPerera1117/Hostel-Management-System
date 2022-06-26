@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="makeRegistrationContext" prefHeight="908.0" prefWidth="1292.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.HostelManagementSystem.controller.MakeRegistrationFormController">
+   <children>
+      <AnchorPane layoutX="225.0" layoutY="96.0" opacity="0.09" prefHeight="202.0" prefWidth="219.0" style="-fx-background-color: #4f0000;" />
+      <AnchorPane layoutX="490.0" layoutY="96.0" opacity="0.09" prefHeight="202.0" prefWidth="219.0" style="-fx-background-color: #4f0000;" />
+      <AnchorPane layoutX="756.0" layoutY="96.0" opacity="0.09" prefHeight="202.0" prefWidth="219.0" style="-fx-background-color: #4f0000;" />
+      <AnchorPane layoutX="1020.0" layoutY="96.0" opacity="0.09" prefHeight="202.0" prefWidth="219.0" style="-fx-background-color: #4f0000;" />
+      <Label layoutX="105.0" layoutY="23.0" text="Make Registration" textFill="#4f0000">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="56.0" fitWidth="42.0" layoutX="25.0" layoutY="24.0" onMouseClicked="#backToDashBoardOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/Dashboard.png" />
+         </image>
+      </ImageView>
+      <JFXTextField fx:id="txtStudentName" focusColor="BLACK" labelFloat="true" layoutX="40.0" layoutY="445.0" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="323.0" promptText="Student Name :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
+      <Label fx:id="lblDate" layoutX="1147.0" layoutY="22.0" text="Date :2022-11-05">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTime" layoutX="1171.0" layoutY="47.0" text="Time:10.30.00">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Separator layoutX="23.0" layoutY="83.0" prefHeight="0.0" prefWidth="1246.0" />
+      <ImageView fitHeight="57.0" fitWidth="58.0" layoutX="300.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/rooms.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="356.0" layoutY="181.0" text="Non-AC">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNonACRoomCount" layoutX="319.0" layoutY="212.0" text="35">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Label>
+      <Label layoutX="248.0" layoutY="182.0" text="RM-1324">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="302.0" layoutY="254.0" text="Available">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="57.0" fitWidth="58.0" layoutX="565.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/rooms.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="589.0" layoutY="181.0" text="Non-AC/Food">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNonACFoodRoomCount" layoutX="584.0" layoutY="212.0" text="20">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Label>
+      <Label layoutX="499.0" layoutY="182.0" text="RM-5467">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="567.0" layoutY="254.0" text="Available">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="57.0" fitWidth="58.0" layoutX="831.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/rooms.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="902.0" layoutY="181.0" text="AC">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblACRoomCount" layoutX="850.0" layoutY="212.0" text="14">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Label>
+      <Label layoutX="790.0" layoutY="182.0" text="RM-7896">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="833.0" layoutY="254.0" text="Available">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="57.0" fitWidth="58.0" layoutX="1095.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/rooms.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="1148.0" layoutY="181.0" text="AC/Food">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblACFoodRoomCount" layoutX="1114.0" layoutY="212.0" text="10">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Label>
+      <Label layoutX="1043.0" layoutY="182.0" text="RM-0093">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="1097.0" layoutY="254.0" text="Available">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblRegID" layoutX="40.0" layoutY="314.0" text="Reg ID :R00-001">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <JFXComboBox fx:id="cmbStudentID" focusColor="BLACK" layoutX="40.0" layoutY="380.0" prefHeight="36.0" prefWidth="323.0" promptText="Student ID :" />
+      <JFXComboBox fx:id="cmbRoomTypeID" focusColor="BLACK" layoutX="40.0" layoutY="509.0" prefHeight="36.0" prefWidth="323.0" promptText="Room Type ID :" />
+      <JFXTextField fx:id="txtKeyMoney" focusColor="BLACK" labelFloat="true" layoutX="40.0" layoutY="637.0" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="323.0" promptText="Key Money :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtRoomType" focusColor="BLACK" labelFloat="true" layoutX="40.0" layoutY="574.0" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="323.0" promptText="Room Type :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtPayment" focusColor="BLACK" labelFloat="true" layoutX="40.0" layoutY="702.0" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="323.0" promptText="Payment :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
+      <TableView fx:id="tblReservation" layoutX="422.0" layoutY="325.0" prefHeight="526.0" prefWidth="837.0">
+        <columns>
+          <TableColumn fx:id="colRegID" prefWidth="138.0" text="Reg_ID" />
+          <TableColumn fx:id="colDate" prefWidth="177.0" text="Date" />
+            <TableColumn fx:id="colStudentID" prefWidth="179.0" text="Student ID" />
+            <TableColumn fx:id="colRoomTypeID" prefWidth="173.0" text="Room Type ID" />
+            <TableColumn fx:id="colStatus" prefWidth="169.0" text="Status" />
+        </columns>
+      </TableView>
+      <JFXButton fx:id="btnAddReservation" buttonType="RAISED" layoutX="225.0" layoutY="826.0" onAction="#btnAddReservationOnAction" prefHeight="40.0" prefWidth="171.0" style="-fx-background-color: #18964d;" text="Add Reservation" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnCancel" buttonType="RAISED" layoutX="78.0" layoutY="826.0" onAction="#btnCancelOnAction" prefHeight="40.0" prefWidth="129.0" style="-fx-background-color: #c93333;" text="Cancel" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="27.0" layoutY="129.0" onAction="#btnAddNewStudentOnAction" prefHeight="130.0" prefWidth="162.0" style="-fx-background-color: #4f0000;" text="+ New Student" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </JFXButton>
+      <JFXTextField fx:id="txtStatus" focusColor="BLACK" labelFloat="true" layoutX="40.0" layoutY="765.0" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="323.0" promptText="Status :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
+   </children>
+</AnchorPane>
