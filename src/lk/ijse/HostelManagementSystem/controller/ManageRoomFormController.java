@@ -7,11 +7,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -23,12 +21,14 @@ import lk.ijse.HostelManagementSystem.business.SuperBO;
 import lk.ijse.HostelManagementSystem.business.custom.RoomBO;
 import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.view.tm.RoomTM;
+import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class ManageRoomFormController {
     public AnchorPane roomsContext;
@@ -68,11 +68,48 @@ public class ManageRoomFormController {
     }
 
     private void loadAllRooms() throws Exception {
+        tblRoom.getItems().clear();
+
         List<RoomDTO> allRooms = roomBO.getAllRooms();
         for (RoomDTO dto:allRooms) {
             Button btn = new Button("Delete");
             tblRoom.getItems().add(new RoomTM(dto.getRoom_type_id(),dto.getType(),dto.getKey_money(),dto.getQty(),btn));
+
+            btn.setOnAction(e->{
+            //------------------delete room--------------------------------
+
+                String room_type_id = tblRoom.getSelectionModel().getSelectedItem().getRoom_type_id();
+
+                try {
+                    if (!existsRoom(room_type_id)){
+                        new Alert(Alert.AlertType.ERROR, "There is no such room associated with the id " + room_type_id).show();
+                    }
+
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure?", ButtonType.YES, ButtonType.NO);
+                    Optional<ButtonType> buttonType = alert.showAndWait();
+
+                    if (buttonType.get().equals(ButtonType.YES)) {
+                        roomBO.deleteRoom(room_type_id);
+                        tblRoom.getItems().remove(tblRoom.getSelectionModel().getSelectedItem());
+                        tblRoom.getSelectionModel().clearSelection();
+                        initialUI();
+
+                        Notifications notifications = Notifications.create().title("Successful !").text("Room has been deleted successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
+                        notifications.darkStyle();
+                        notifications.show();
+
+                    }
+
+                } catch (Exception exception) {
+                    new Alert(Alert.AlertType.ERROR, "Failed to delete the room " + room_type_id).show();
+                   exception.printStackTrace();
+                }
+            });
         }
+    }
+
+    private boolean existsRoom(String room_type_id) {
+        return false;
     }
 
     private void initialUI() {
