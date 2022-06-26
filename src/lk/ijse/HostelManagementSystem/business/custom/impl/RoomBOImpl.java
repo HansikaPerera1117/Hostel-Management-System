@@ -4,7 +4,6 @@ import lk.ijse.HostelManagementSystem.business.custom.RoomBO;
 import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.entity.Room;
 import lk.ijse.HostelManagementSystem.repository.DAOFactory;
-import lk.ijse.HostelManagementSystem.repository.SuperDAO;
 import lk.ijse.HostelManagementSystem.repository.custom.RoomDAO;
 
 import java.util.ArrayList;
@@ -26,21 +25,21 @@ public class RoomBOImpl implements RoomBO {
 
     @Override
     public boolean addRoom(RoomDTO roomDTO) throws Exception {
-        return false;
+       return roomDAO.add(new Room(roomDTO.getRoom_type_id(),roomDTO.getType(),roomDTO.getKey_money(),roomDTO.getQty()));
     }
 
     @Override
     public boolean updateRoom(RoomDTO roomDTO) throws Exception {
-        return false;
+        return roomDAO.update(new Room(roomDTO.getRoom_type_id(),roomDTO.getType(),roomDTO.getKey_money(),roomDTO.getQty()));
     }
 
     @Override
     public boolean deleteRoom(String id) throws Exception {
-        return false;
+        return roomDAO.delete(id);
     }
 
     @Override
     public boolean roomExist(String id) throws Exception {
-        return false;
+        return roomDAO.exist(id);
     }
 }

@@ -67,6 +67,18 @@ public class ManageRoomFormController {
         }
     }
 
+    private void initialUI() {
+        txtRoomTypeID.clear();
+        txtRoomType.clear();
+        txtKeyMoney.clear();
+        txtQty.clear();
+        txtRoomTypeID.setDisable(true);
+        txtRoomType.setDisable(true);
+        txtKeyMoney.setDisable(true);
+        txtQty.setDisable(true);
+        btnSave.setDisable(true);
+    }
+
     private void loadAllRooms() throws Exception {
         tblRoom.getItems().clear();
 
@@ -108,26 +120,6 @@ public class ManageRoomFormController {
         }
     }
 
-    private boolean existsRoom(String room_type_id) {
-        return false;
-    }
-
-    private void initialUI() {
-        txtRoomTypeID.clear();
-        txtRoomType.clear();
-        txtKeyMoney.clear();
-        txtQty.clear();
-        txtRoomTypeID.setDisable(true);
-        txtRoomType.setDisable(true);
-        txtKeyMoney.setDisable(true);
-        txtQty.setDisable(true);
-        btnSave.setDisable(true);
-    }
-
-
-    public void btnSaveRoomOnAction(ActionEvent actionEvent) {
-    }
-
     public void btnNewRoomOnAction(ActionEvent actionEvent) {
         txtRoomTypeID.setEditable(true);
         txtRoomTypeID.setDisable(false);
@@ -143,6 +135,42 @@ public class ManageRoomFormController {
         btnSave.setText("Save");
         tblRoom.getSelectionModel().clearSelection();
     }
+
+    private boolean existsRoom(String room_type_id) throws Exception {
+        return roomBO.roomExist(room_type_id);
+    }
+
+    public void btnSaveRoomOnAction(ActionEvent actionEvent) {
+        if (btnSave.getText().equalsIgnoreCase("Save")){
+            //---------------------save room-------------------------------------------
+            try {
+                if (existsRoom(txtRoomTypeID.getText())){
+                    new Alert(Alert.AlertType.ERROR, txtRoomTypeID.getText() + " already exists").show();
+                }
+
+              if (roomBO.addRoom(new RoomDTO(txtRoomTypeID.getText(),txtRoomType.getText(),txtKeyMoney.getText(),Integer.parseInt(txtQty.getText())))){
+                  Notifications notifications = Notifications.create().title("Successful !").text("Room has been saved successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
+                  notifications.darkStyle();
+                  notifications.show();
+              }
+
+            } catch (Exception e) {
+                new Alert(Alert.AlertType.ERROR, "Failed to save the room " + e.getMessage()).show();
+                e.printStackTrace();
+            }
+
+        }else {
+            //---------------------update room-------------------------------------------
+
+        }
+
+        try {
+            loadAllRooms();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void textFields_Key_Released(KeyEvent keyEvent) {
     }

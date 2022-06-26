@@ -1,7 +1,5 @@
 package lk.ijse.HostelManagementSystem.business.custom.impl;
 
-import lk.ijse.HostelManagementSystem.business.BOFactory;
-import lk.ijse.HostelManagementSystem.business.SuperBO;
 import lk.ijse.HostelManagementSystem.business.custom.StudentBO;
 import lk.ijse.HostelManagementSystem.dto.StudentDTO;
 import lk.ijse.HostelManagementSystem.entity.Student;
