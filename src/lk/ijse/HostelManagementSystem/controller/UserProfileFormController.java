@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -22,14 +24,17 @@ import lk.ijse.HostelManagementSystem.business.BOFactory;
 import lk.ijse.HostelManagementSystem.business.SuperBO;
 import lk.ijse.HostelManagementSystem.business.custom.UserBO;
 import lk.ijse.HostelManagementSystem.dto.UserDTO;
+import lk.ijse.HostelManagementSystem.validation.ValidationUtil;
 import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class UserProfileFormController {
     public AnchorPane userProfileContext;
@@ -43,7 +48,13 @@ public class UserProfileFormController {
     public JFXButton btnResetPassword;
 
     private final UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
+    LinkedHashMap<TextField, Pattern> map = new LinkedHashMap<>();
+
     public void initialize(){
+        //------------validation--------------------
+        Pattern passwordPattern = Pattern.compile("^[A-z0-9]{4,8}$");
+        map.put(pwdNewPassword,passwordPattern);
+
         loadDateAndTime();
         initialUI();
     }
@@ -65,6 +76,7 @@ public class UserProfileFormController {
         pwdPassword.setEditable(false);
         txtEmail.setEditable(false);
         pwdNewPassword.setEditable(true);
+        btnResetPassword.setDisable(true);
 
     }
 
@@ -111,6 +123,16 @@ public class UserProfileFormController {
     }
 
     public void textFields_Key_Released(KeyEvent keyEvent) {
+        ValidationUtil.validate(map,btnResetPassword);
+
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            Object response =  ValidationUtil.validate(map,btnResetPassword);;
+
+            if (response instanceof TextField) {
+                TextField textField = (TextField) response;
+                textField.requestFocus();
+            }
+        }
     }
 
     public void backToDashBoardOnAction(MouseEvent event) throws IOException {
