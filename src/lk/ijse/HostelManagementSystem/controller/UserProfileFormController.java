@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class UserProfileFormController {
     public AnchorPane userProfileContext;
@@ -62,7 +64,7 @@ public class UserProfileFormController {
         txtChangePasswordUserName.setEditable(false);
         pwdPassword.setEditable(false);
         txtEmail.setEditable(false);
-
+        pwdNewPassword.setEditable(true);
 
     }
 
@@ -81,6 +83,31 @@ public class UserProfileFormController {
     }
 
     public void btnDeleteUserOnAction(ActionEvent actionEvent) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure?", ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> buttonType = alert.showAndWait();
+
+            if (buttonType.get().equals(ButtonType.YES)) {
+                userBO.deleteUserAccount(txtUserName.getText());
+
+                txtUserName.clear();
+                pwdPassword.clear();
+                txtEmail.clear();
+                txtChangePasswordUserName.clear();
+                pwdNewPassword.clear();
+                pwdNewPassword.setEditable(false);
+
+                Notifications notifications = Notifications.create().title("Successful !").text("User has been deleted successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
+                notifications.darkStyle();
+                notifications.show();
+
+                setUI(userProfileContext,"logInForm");
+            }
+
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to delete the user ").show();
+            e.printStackTrace();
+        }
     }
 
     public void textFields_Key_Released(KeyEvent keyEvent) {
