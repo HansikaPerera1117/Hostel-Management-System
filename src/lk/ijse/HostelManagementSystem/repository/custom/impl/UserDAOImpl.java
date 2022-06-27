@@ -5,6 +5,7 @@ import lk.ijse.HostelManagementSystem.repository.custom.UserDAO;
 import lk.ijse.HostelManagementSystem.util.FactoryConfiguration;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -59,6 +60,15 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<User> findAll() throws Exception {
-        return null;
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql ="FROM User ";
+        Query query = session.createQuery(hql);
+        List<User> userList = query.list();
+
+        transaction.commit();
+        session.close();
+        return userList;
     }
 }
