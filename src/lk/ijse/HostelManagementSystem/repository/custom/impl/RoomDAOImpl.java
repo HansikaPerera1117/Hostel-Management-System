@@ -65,8 +65,18 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public Room find(String id) throws Exception {
-        return null;
+    public List<Room> find(String id) throws Exception {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "FROM Room WHERE room_type_id = : room_id ";
+        Query query = session.createQuery(hql);
+        query.setParameter("room_id",id);
+        List<Room> roomList = query.list();
+
+        transaction.commit();
+        session.close();
+        return roomList;
     }
 
     @Override

@@ -13,7 +13,7 @@ public interface CrudDAO <Entity extends SuperEntity, ID> extends SuperDAO{
 
     boolean exist(ID id) throws Exception;
 
-    Entity find(ID id) throws Exception;
+    List<Entity> find(ID id) throws Exception;
 
     List<Entity> findAll() throws Exception;
 }

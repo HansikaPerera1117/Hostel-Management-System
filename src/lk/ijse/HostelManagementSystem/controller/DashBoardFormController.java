@@ -95,6 +95,10 @@ public class DashBoardFormController {
         }
     }
 
+    public void openMyProfileOnAction(MouseEvent event) throws IOException {
+        setUI(dashBoardContext,"userProfileForm");
+    }
+
     public void logOutOnAction(MouseEvent event) throws IOException {
         setUI(dashBoardContext,"logInForm");
     }
@@ -105,4 +109,5 @@ public class DashBoardFormController {
         stage.setTitle(location);
         stage.centerOnScreen();
     }
+
 }

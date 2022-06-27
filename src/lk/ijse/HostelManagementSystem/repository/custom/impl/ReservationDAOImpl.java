@@ -27,7 +27,7 @@ public class ReservationDAOImpl implements ReservationDAO {
     }
 
     @Override
-    public Reservation find(String id) throws Exception {
+    public List<Reservation> find(String id) throws Exception {
         return null;
     }
 

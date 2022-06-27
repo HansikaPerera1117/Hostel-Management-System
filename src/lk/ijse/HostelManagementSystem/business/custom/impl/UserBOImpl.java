@@ -23,6 +23,17 @@ public class UserBOImpl implements UserBO {
     }
 
     @Override
+    public List<UserDTO> searchUser(String username) throws Exception {
+        List<User> userList = userDAO.find(username);
+        List<UserDTO> userDetails = new ArrayList<>();
+        for (User user:userList) {
+            userDetails.add(new UserDTO(user.getUserName(),user.getPassWord(),user.getEmail()));
+        }
+        return userDetails;
+    }
+
+
+    @Override
     public boolean registerUser(UserDTO userDTO) throws Exception {
         return userDAO.add(new User(userDTO.getUserName(),userDTO.getPassWord(),userDTO.getEmail()));
     }

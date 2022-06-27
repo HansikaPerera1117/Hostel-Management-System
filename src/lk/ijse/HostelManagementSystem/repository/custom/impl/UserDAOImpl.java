@@ -1,5 +1,6 @@
 package lk.ijse.HostelManagementSystem.repository.custom.impl;
 
+import lk.ijse.HostelManagementSystem.entity.Student;
 import lk.ijse.HostelManagementSystem.entity.User;
 import lk.ijse.HostelManagementSystem.repository.custom.UserDAO;
 import lk.ijse.HostelManagementSystem.util.FactoryConfiguration;
@@ -65,8 +66,18 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User find(String username) throws Exception {
-        return null;
+    public List<User> find(String username) throws Exception {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "FROM User WHERE userName = : user_name ";
+        Query query = session.createQuery(hql);
+        query.setParameter("user_name",username);
+        List<User> userList = query.list();
+
+        transaction.commit();
+        session.close();
+        return userList;
     }
 
     @Override
@@ -82,4 +93,5 @@ public class UserDAOImpl implements UserDAO {
         session.close();
         return userList;
     }
+
 }

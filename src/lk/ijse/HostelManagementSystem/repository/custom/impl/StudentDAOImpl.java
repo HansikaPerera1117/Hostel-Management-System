@@ -65,8 +65,8 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
-    public Student find(String id) throws Exception {
-       /* Session session = FactoryConfiguration.getInstance().getSession();
+    public List<Student> find(String id) throws Exception {
+        Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
         String hql = "FROM Student WHERE student_id = : s_id ";
@@ -76,8 +76,7 @@ public class StudentDAOImpl implements StudentDAO {
 
         transaction.commit();
         session.close();
-        return student_id;*/
-        return null;
+        return student_id;
     }
 
     @Override

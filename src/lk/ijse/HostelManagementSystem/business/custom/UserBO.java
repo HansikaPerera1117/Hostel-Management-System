@@ -9,6 +9,8 @@ import java.util.List;
 public interface UserBO extends SuperBO {
     List<UserDTO> getAllUsers() throws Exception;
 
+    List<UserDTO> searchUser(String username) throws Exception;
+
     boolean registerUser(UserDTO userDTO) throws Exception;
 
     boolean updateUserDetails(UserDTO userDTO) throws Exception;

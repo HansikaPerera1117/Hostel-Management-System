@@ -32,12 +32,12 @@ public class LogInFormController {
 
     public void btnLogInOnAction(ActionEvent actionEvent) throws IOException {
        try {
-            List<UserDTO> allUsers = userBO.getAllUsers();
-            for (UserDTO dto:allUsers) {
-                 userName = dto.getUserName();
-                 passWord = dto.getPassWord();
-            }
-        } catch (Exception e) {
+           List<UserDTO> userDetails = userBO.searchUser(txtUserName.getText());
+           for (UserDTO dto:userDetails) {
+                userName = dto.getUserName();
+                passWord = dto.getPassWord();
+           }
+       } catch (Exception e) {
             e.printStackTrace();
         }
 
