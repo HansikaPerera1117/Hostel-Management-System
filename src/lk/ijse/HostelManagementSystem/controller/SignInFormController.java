@@ -11,18 +11,20 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LogInFormController {
-
-    public AnchorPane logInContext;
+public class SignInFormController {
+    public JFXTextField txtEmail;
+    public JFXTextField txtFullName;
     public JFXTextField txtUserName;
     public JFXPasswordField pwdPassword;
 
-    public void btnLogInOnAction(ActionEvent actionEvent) throws IOException {
-        setUI(logInContext,"DashBoardForm");
+    public AnchorPane registerContext;
+
+
+    public void btnRegisterOnAction(ActionEvent actionEvent) {
     }
 
-    public void openRegisterOnAction(MouseEvent event) throws IOException {
-        setUI(logInContext,"signInForm");
+    public void backToLogInOnAction(MouseEvent event) throws IOException {
+        setUI(registerContext,"logInForm");
     }
 
     public void setUI(AnchorPane ap, String location) throws IOException {

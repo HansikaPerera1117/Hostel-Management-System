@@ -43,10 +43,16 @@
             <ColorAdjust />
          </effect>
       </Separator>
-      <JFXButton buttonType="RAISED" layoutX="680.0" layoutY="433.0" onAction="#btnLogInOnAction" prefHeight="43.0" prefWidth="124.0" style="-fx-background-color: #4F0000;" text="LogIn" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="680.0" layoutY="393.0" onAction="#btnLogInOnAction" prefHeight="43.0" prefWidth="124.0" style="-fx-background-color: #4F0000;" text="LogIn" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </JFXButton>
+      <Label layoutX="545.0" layoutY="460.0" text="New to Logistics?" />
+      <Label layoutX="670.0" layoutY="460.0" onMouseClicked="#openRegisterOnAction" text="Register" textAlignment="CENTER" textFill="#4f0000" underline="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
