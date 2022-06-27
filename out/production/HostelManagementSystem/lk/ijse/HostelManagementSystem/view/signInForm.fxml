@@ -18,12 +18,12 @@
             <Image url="@assests/images/login_bg.jpg" />
          </image>
       </ImageView>
-      <JFXTextField fx:id="txtUserName" focusColor="#4f0000" layoutX="473.0" layoutY="254.0" prefHeight="50.0" prefWidth="336.0" promptText="User Name" unFocusColor="#4f0000">
+      <JFXTextField fx:id="txtEmail" focusColor="#4f0000" layoutX="474.0" layoutY="104.0" onKeyReleased="#textFields_Key_Released" prefHeight="50.0" prefWidth="336.0" promptText="Email" unFocusColor="#4f0000">
          <font>
             <Font size="18.0" />
          </font>
       </JFXTextField>
-      <JFXPasswordField fx:id="pwdPassword" focusColor="#4f0000" layoutX="474.0" layoutY="329.0" prefHeight="50.0" prefWidth="336.0" promptText="Password" unFocusColor="#4f0000">
+      <JFXPasswordField fx:id="pwdPassword" focusColor="#4f0000" layoutX="474.0" layoutY="329.0" onKeyReleased="#textFields_Key_Released" prefHeight="50.0" prefWidth="336.0" promptText="Password" unFocusColor="#4f0000">
          <font>
             <Font size="18.0" />
          </font>
@@ -38,26 +38,41 @@
             <ColorAdjust />
          </effect>
       </Separator>
-      <JFXButton buttonType="RAISED" layoutX="696.0" layoutY="402.0" onAction="#btnRegisterOnAction" prefHeight="43.0" prefWidth="124.0" style="-fx-background-color: #4F0000;" text="Register" textFill="WHITE">
+      <JFXButton fx:id="btnRegister" buttonType="RAISED" layoutX="697.0" layoutY="414.0" onAction="#btnRegisterOnAction" prefHeight="43.0" prefWidth="124.0" style="-fx-background-color: #4F0000;" text="Register" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </JFXButton>
-      <Label layoutX="568.0" layoutY="465.0" text="Joined us befor?" />
-      <Label layoutX="685.0" layoutY="465.0" onMouseClicked="#backToLogInOnAction" text="LogIn" textAlignment="CENTER" textFill="#4f0000" underline="true">
+      <Label layoutX="568.0" layoutY="473.0" text="Joined us befor?" />
+      <Label layoutX="685.0" layoutY="473.0" onMouseClicked="#backToLogInOnAction" text="LogIn" textAlignment="CENTER" textFill="#4f0000" underline="true">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="txtFullName" focusColor="#4f0000" layoutX="473.0" layoutY="178.0" prefHeight="50.0" prefWidth="336.0" promptText="FullName" unFocusColor="#4f0000">
+      <JFXTextField fx:id="txtFullName" focusColor="#4f0000" layoutX="474.0" layoutY="178.0" onKeyReleased="#textFields_Key_Released" prefHeight="50.0" prefWidth="336.0" promptText="FullName" unFocusColor="#4f0000">
          <font>
             <Font size="18.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtEmail" focusColor="#4f0000" layoutX="474.0" layoutY="103.0" prefHeight="50.0" prefWidth="336.0" promptText="Email" unFocusColor="#4f0000">
+      <JFXTextField fx:id="txtUserName" focusColor="#4f0000" layoutX="474.0" layoutY="254.0" onKeyReleased="#textFields_Key_Released" prefHeight="50.0" prefWidth="336.0" promptText="UserName" unFocusColor="#4f0000">
          <font>
             <Font size="18.0" />
          </font>
       </JFXTextField>
+      <Label layoutX="474.0" layoutY="304.0" text="You can use letters,numbers &amp; underscore" textFill="#686868">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="474.0" layoutY="379.0" prefHeight="19.0" prefWidth="336.0" text="Use minimum 4 characters and maximum 8 characters " textFill="#686868">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="474.0" layoutY="392.0" prefHeight="19.0" prefWidth="336.0" text="with a mix of letters &amp; numbers " textFill="#686868">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
