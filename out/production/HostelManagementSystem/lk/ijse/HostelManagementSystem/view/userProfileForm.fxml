@@ -1,14 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="lk.ijse.HostelManagementSystem.controller.UserProfileFormController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane fx:id="userProfileContext" prefHeight="840.0" prefWidth="501.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.HostelManagementSystem.controller.UserProfileFormController">
+   <children>
+      <Label layoutX="84.0" layoutY="20.0" text="User Profile" textFill="#4f0000">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="56.0" fitWidth="42.0" layoutX="17.0" layoutY="23.0" onMouseClicked="#backToDashBoardOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/back.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblDate" layoutX="359.0" layoutY="21.0" text="Date :2022-11-05">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTime" layoutX="383.0" layoutY="46.0" text="Time:10.30.00">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="110.0" fitWidth="123.0" layoutX="174.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/profile.png" />
+         </image>
+      </ImageView>
+      <JFXTextField fx:id="txtUserName" focusColor="#4f0000" layoutX="47.0" layoutY="247.0" prefHeight="50.0" prefWidth="404.0" promptText="UserName" unFocusColor="#4f0000">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXPasswordField fx:id="pwdPassword" focusColor="#4f0000" layoutX="47.0" layoutY="311.0" prefHeight="50.0" prefWidth="404.0" promptText="Password" unFocusColor="#4f0000">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXPasswordField>
+      <JFXTextField fx:id="txtEmail" focusColor="#4f0000" layoutX="47.0" layoutY="376.0" prefHeight="50.0" prefWidth="404.0" promptText="Email" unFocusColor="#4f0000">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <Label layoutX="19.0" layoutY="85.0" text="Profile detaild" textFill="#797979" />
+      <Separator layoutX="121.0" layoutY="96.0" prefHeight="5.0" prefWidth="355.0" />
+      <Label layoutX="21.0" layoutY="452.0" text="Manage Profile Details" textFill="#797979" />
+      <Separator layoutX="179.0" layoutY="463.0" prefHeight="5.0" prefWidth="299.0" />
+      <ImageView fitHeight="31.0" fitWidth="42.0" layoutX="27.0" layoutY="489.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/manage_account.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="62.0" layoutY="490.0" text="Change Passwords" textFill="#4f0000">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txtChangePasswordUserName" focusColor="#4f0000" layoutX="49.0" layoutY="536.0" prefHeight="50.0" prefWidth="404.0" promptText="UserName" unFocusColor="#4f0000">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXPasswordField fx:id="pwdNewPassword" focusColor="#4f0000" layoutX="49.0" layoutY="599.0" onKeyReleased="#textFields_Key_Released" prefHeight="50.0" prefWidth="404.0" promptText="New Password" unFocusColor="#4f0000">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXPasswordField>
+      <ImageView fitHeight="31.0" fitWidth="42.0" layoutX="21.0" layoutY="719.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/delete_user.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="56.0" layoutY="720.0" text="Delete User" textFill="#4f0000">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <JFXButton buttonType="RAISED" layoutX="39.0" layoutY="763.0" onAction="#btnDeleteUserOnAction" prefHeight="40.0" prefWidth="208.0" style="-fx-background-color: #4f0000;" text="Delete User Account" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnResetPassword" buttonType="RAISED" layoutX="326.0" layoutY="674.0" onAction="#btnResetPasswordOnAction" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #4f0000;" text="Reset Password" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="49.0" layoutY="649.0" prefHeight="19.0" prefWidth="336.0" text="Use minimum 4 characters and maximum 8 characters " textFill="#686868">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="49.0" layoutY="662.0" prefHeight="19.0" prefWidth="336.0" text="with a mix of letters &amp; numbers " textFill="#686868">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>

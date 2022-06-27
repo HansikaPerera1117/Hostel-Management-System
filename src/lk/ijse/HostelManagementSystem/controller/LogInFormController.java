@@ -25,7 +25,7 @@ public class LogInFormController {
     public JFXTextField txtUserName;
     public JFXPasswordField pwdPassword;
     private int attempts = 0;
-    private String userName;
+    public String userName;
     private String passWord;
 
     private final UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
