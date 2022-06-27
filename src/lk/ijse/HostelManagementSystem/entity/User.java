@@ -18,4 +18,7 @@ public class User implements SuperEntity {
     private String userName;
     @Column(nullable = false)
     private String passWord;
+    @Column(nullable = false)
+    private String email;
+
 }

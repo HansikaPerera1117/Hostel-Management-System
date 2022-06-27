@@ -205,14 +205,13 @@ public class StudentFormController {
            try {
                 if (existsStudent(txtStudentId.getText())) {
                     new Alert(Alert.AlertType.ERROR, txtStudentId.getText() + " already exists").show();
+                }else {
+                    if (studentBO.addStudent(new StudentDTO(txtStudentId.getText(), txtStudentName.getText(), txtAddress.getText(), txtContactNo.getText(), dtDOB.getValue(), String.valueOf(cmbGender.getValue())))) {
+                        Notifications notifications = Notifications.create().title("Successful !").text("Student has been saved successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
+                        notifications.darkStyle();
+                        notifications.show();
+                    }
                 }
-
-               if (studentBO.addStudent(new StudentDTO(txtStudentId.getText(), txtStudentName.getText(), txtAddress.getText(), txtContactNo.getText(), dtDOB.getValue(), String.valueOf(cmbGender.getValue())))) {
-                   Notifications notifications = Notifications.create().title("Successful !").text("Student has been saved successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
-                   notifications.darkStyle();
-                   notifications.show();
-               }
-
            } catch (Exception e) {
                new Alert(Alert.AlertType.ERROR, "Failed to save the student " + e.getMessage()).show();
                e.printStackTrace();
@@ -222,12 +221,12 @@ public class StudentFormController {
            try {
                if (!existsStudent(txtStudentId.getText())) {
                    new Alert(Alert.AlertType.ERROR, "There is no such student associated with the id " + txtStudentId.getText() ).show();
-               }
-
-               if (studentBO.updateStudent(new StudentDTO(txtStudentId.getText(), txtStudentName.getText(), txtAddress.getText(), txtContactNo.getText(), dtDOB.getValue(), String.valueOf(cmbGender.getValue())))) {
-                   Notifications notifications = Notifications.create().title("Successful !").text("Student has been updated successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
-                   notifications.darkStyle();
-                   notifications.show();
+               }else {
+                   if (studentBO.updateStudent(new StudentDTO(txtStudentId.getText(), txtStudentName.getText(), txtAddress.getText(), txtContactNo.getText(), dtDOB.getValue(), String.valueOf(cmbGender.getValue())))) {
+                       Notifications notifications = Notifications.create().title("Successful !").text("Student has been updated successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
+                       notifications.darkStyle();
+                       notifications.show();
+                   }
                }
 
            } catch (Exception e) {

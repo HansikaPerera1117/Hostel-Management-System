@@ -62,7 +62,6 @@ public class StudentDAOImpl implements StudentDAO {
         session.close();
 
         return (student_id.size()>0) ? true : false;
-
     }
 
     @Override

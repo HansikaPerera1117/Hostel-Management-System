@@ -31,7 +31,7 @@ public class LogInFormController {
     private final UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
 
     public void btnLogInOnAction(ActionEvent actionEvent) throws IOException {
-        try {
+       try {
             List<UserDTO> allUsers = userBO.getAllUsers();
             for (UserDTO dto:allUsers) {
                  userName = dto.getUserName();
@@ -62,6 +62,7 @@ public class LogInFormController {
             txtUserName.setEditable(false);
             pwdPassword.setEditable(false);
         }
+
     }
 
     public void openRegisterOnAction(MouseEvent event) throws IOException {

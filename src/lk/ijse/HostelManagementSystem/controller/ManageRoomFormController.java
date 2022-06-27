@@ -180,13 +180,14 @@ public class ManageRoomFormController {
             try {
                 if (existsRoom(txtRoomTypeID.getText())){
                     new Alert(Alert.AlertType.ERROR, txtRoomTypeID.getText() + " already exists").show();
-                }
+                }else {
 
-              if (roomBO.addRoom(new RoomDTO(txtRoomTypeID.getText(),txtRoomType.getText(),txtKeyMoney.getText(),Integer.parseInt(txtQty.getText())))){
-                  Notifications notifications = Notifications.create().title("Successful !").text("Room has been saved successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
-                  notifications.darkStyle();
-                  notifications.show();
-              }
+                    if (roomBO.addRoom(new RoomDTO(txtRoomTypeID.getText(), txtRoomType.getText(), txtKeyMoney.getText(), Integer.parseInt(txtQty.getText())))) {
+                        Notifications notifications = Notifications.create().title("Successful !").text("Room has been saved successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
+                        notifications.darkStyle();
+                        notifications.show();
+                    }
+                }
 
             } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to save the room " + e.getMessage()).show();
@@ -199,13 +200,13 @@ public class ManageRoomFormController {
 
                 if (!existsRoom(txtRoomTypeID.getText())){
                     new Alert(Alert.AlertType.ERROR, "There is no such room associated with the id " + txtRoomTypeID.getText() ).show();
+                }else {
+                    if (roomBO.updateRoom(new RoomDTO(txtRoomTypeID.getText(), txtRoomType.getText(), txtKeyMoney.getText(), Integer.parseInt(txtQty.getText())))) {
+                        Notifications notifications = Notifications.create().title("Successful !").text("Room has been updated successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
+                        notifications.darkStyle();
+                        notifications.show();
+                    }
                 }
-
-               if (roomBO.updateRoom(new RoomDTO(txtRoomTypeID.getText(),txtRoomType.getText(),txtKeyMoney.getText(),Integer.parseInt(txtQty.getText())))){
-                   Notifications notifications = Notifications.create().title("Successful !").text("Room has been updated successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
-                   notifications.darkStyle();
-                   notifications.show();
-               }
 
             } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the room " + e.getMessage()).show();

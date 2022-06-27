@@ -49,8 +49,19 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean exist(String username) throws Exception {
-        return false;
+    public boolean exist(String email) throws Exception {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "SELECT email FROM User WHERE email = : email_address ";
+        Query query = session.createQuery(hql);
+        query.setParameter("email_address",email);
+        List<String> emailAddressList = query.list();
+
+        transaction.commit();
+        session.close();
+
+        return (emailAddressList.size()>0) ? true : false;
     }
 
     @Override

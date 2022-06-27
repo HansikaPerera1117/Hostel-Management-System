@@ -14,26 +14,31 @@ public class UserBOImpl implements UserBO {
 
     @Override
     public List<UserDTO> getAllUsers() throws Exception {
-        List<User> all = userDAO.findAll();
+       List<User> all = userDAO.findAll();
         List<UserDTO> allUsers = new ArrayList<>();
         for (User user:all) {
-            allUsers.add(new UserDTO(user.getUserName(),user.getPassWord()));
+            allUsers.add(new UserDTO(user.getUserName(),user.getPassWord(),user.getEmail()));
         }
         return allUsers;
     }
 
     @Override
     public boolean registerUser(UserDTO userDTO) throws Exception {
-        return userDAO.add(new User(userDTO.getUserName(),userDTO.getPassWord()));
+        return userDAO.add(new User(userDTO.getUserName(),userDTO.getPassWord(),userDTO.getEmail()));
     }
 
     @Override
     public boolean updateUserDetails(UserDTO userDTO) throws Exception {
-        return userDAO.update(new User(userDTO.getUserName(),userDTO.getPassWord()));
+        return userDAO.update(new User(userDTO.getUserName(),userDTO.getPassWord(),userDTO.getEmail()));
     }
 
     @Override
     public boolean deleteUserAccount(String username) throws Exception {
         return userDAO.delete(username);
+    }
+
+    @Override
+    public boolean emailExist(String email) throws Exception {
+       return userDAO.exist(email);
     }
 }

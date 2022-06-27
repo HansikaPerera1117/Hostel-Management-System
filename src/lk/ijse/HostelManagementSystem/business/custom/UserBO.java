@@ -14,4 +14,6 @@ public interface UserBO extends SuperBO {
     boolean updateUserDetails(UserDTO userDTO) throws Exception;
 
     boolean deleteUserAccount(String username) throws Exception;
+
+    boolean emailExist(String email) throws Exception;
 }
