@@ -216,7 +216,12 @@ public class MakeRegistrationFormController {
 
 
     public void btnAddReservationOnAction(ActionEvent actionEvent) {
-
+        try {
+            reservationBO.addReservation(new ReservationDTO(ResID,LocalDate.now(),cmbStudentID.getValue(),cmbRoomTypeID.getValue(),txtStatus.getText()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }
 
     public void btnCancelOnAction(ActionEvent actionEvent) {

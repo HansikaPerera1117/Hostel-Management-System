@@ -25,7 +25,7 @@ public class ReservationBOImpl implements ReservationBO {
 
     @Override
     public boolean addReservation(ReservationDTO reservationDTO) throws Exception {
-        return false;
+        return reservationDAO.add(new Reservation(reservationDTO.getRes_id(),reservationDTO.getDate(),reservationDTO.getStatus(),reservationDTO.getStudent_id(),reservationDTO.getRoom_type_id()));
     }
 
     @Override
