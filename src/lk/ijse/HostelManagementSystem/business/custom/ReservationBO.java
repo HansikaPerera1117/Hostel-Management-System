@@ -1,10 +1,9 @@
 package lk.ijse.HostelManagementSystem.business.custom;
 
 import lk.ijse.HostelManagementSystem.business.SuperBO;
+import lk.ijse.HostelManagementSystem.dto.ReservationDTO;
 import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.dto.StudentDTO;
-import lk.ijse.HostelManagementSystem.entity.Student;
-
 import java.util.List;
 
 public interface ReservationBO extends SuperBO {

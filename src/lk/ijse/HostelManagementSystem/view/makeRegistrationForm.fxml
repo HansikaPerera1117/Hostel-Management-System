@@ -190,7 +190,7 @@
             <Font size="20.0" />
          </font>
       </JFXButton>
-      <JFXTextField fx:id="txtStatus" focusColor="BLACK" labelFloat="true" layoutX="40.0" layoutY="765.0" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="323.0" promptText="Status :">
+      <JFXTextField fx:id="txtStatus" focusColor="BLACK" labelFloat="true" layoutX="40.0" layoutY="765.0" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="323.0" promptText="Status  0.00 is payable / paid">
          <font>
             <Font size="17.0" />
          </font>

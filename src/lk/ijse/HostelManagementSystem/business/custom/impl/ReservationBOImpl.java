@@ -1,11 +1,16 @@
 package lk.ijse.HostelManagementSystem.business.custom.impl;
 
+import lk.ijse.HostelManagementSystem.business.BOFactory;
 import lk.ijse.HostelManagementSystem.business.custom.ReservationBO;
+import lk.ijse.HostelManagementSystem.dto.ReservationDTO;
 import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.dto.StudentDTO;
+import lk.ijse.HostelManagementSystem.entity.Reservation;
 import lk.ijse.HostelManagementSystem.entity.Room;
 import lk.ijse.HostelManagementSystem.entity.Student;
 import lk.ijse.HostelManagementSystem.repository.DAOFactory;
+import lk.ijse.HostelManagementSystem.repository.SuperDAO;
+import lk.ijse.HostelManagementSystem.repository.custom.ReservationDAO;
 import lk.ijse.HostelManagementSystem.repository.custom.RoomDAO;
 import lk.ijse.HostelManagementSystem.repository.custom.StudentDAO;
 
@@ -15,6 +20,8 @@ import java.util.List;
 public class ReservationBOImpl implements ReservationBO {
     private final RoomDAO roomDAO = (RoomDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOType.ROOM);
     private final StudentDAO studentDAO = (StudentDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOType.STUDENT);
+    private final ReservationDAO reservationDAO = (ReservationDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOType.RESERVATION);
+
 
     @Override
     public List<StudentDTO> searchStudent(String id) throws Exception {
@@ -65,4 +72,5 @@ public class ReservationBOImpl implements ReservationBO {
         }
         return roomList;
     }
+
 }
