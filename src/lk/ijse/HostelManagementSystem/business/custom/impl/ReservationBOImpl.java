@@ -28,7 +28,12 @@ public class ReservationBOImpl implements ReservationBO {
 
     @Override
     public List<RoomDTO> searchRoom(String id) throws Exception {
-        return null;
+        List<Room> all = roomDAO.find(id);
+        List<RoomDTO> roomDTOList = new ArrayList<>();
+        for (Room room: all) {
+            roomDTOList.add(new RoomDTO(room.getRoom_type_id(),room.getType(),room.getKey_money(),room.getQty()));
+        }
+        return roomDTOList;
     }
 
     @Override
@@ -38,7 +43,7 @@ public class ReservationBOImpl implements ReservationBO {
 
     @Override
     public boolean checkRoomIsAvailable(String id) throws Exception {
-        return false;
+        return roomDAO.exist(id);
     }
 
     @Override

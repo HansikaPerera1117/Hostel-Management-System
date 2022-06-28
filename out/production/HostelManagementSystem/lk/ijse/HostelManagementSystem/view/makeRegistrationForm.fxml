@@ -59,7 +59,7 @@
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Label layoutX="248.0" layoutY="182.0" text="RM-1324">
+      <Label fx:id="lblNonACRoom" layoutX="248.0" layoutY="182.0" text="RM-1324">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
@@ -84,7 +84,7 @@
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Label layoutX="499.0" layoutY="182.0" text="RM-5467">
+      <Label fx:id="lblNonACFoodRoom" layoutX="499.0" layoutY="182.0" text="RM-5467">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
@@ -109,7 +109,7 @@
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Label layoutX="790.0" layoutY="182.0" text="RM-7896">
+      <Label fx:id="lblACRoom" layoutX="790.0" layoutY="182.0" text="RM-7896">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
@@ -134,7 +134,7 @@
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Label layoutX="1043.0" layoutY="182.0" text="RM-0093">
+      <Label fx:id="lblACFoodRoom" layoutX="1043.0" layoutY="182.0" text="RM-0093">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>

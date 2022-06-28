@@ -25,6 +25,7 @@ import lk.ijse.HostelManagementSystem.business.custom.RoomBO;
 import lk.ijse.HostelManagementSystem.business.custom.StudentBO;
 import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.dto.StudentDTO;
+import lk.ijse.HostelManagementSystem.view.tm.CustomTM;
 import lk.ijse.HostelManagementSystem.view.tm.ReservationTM;
 
 import java.io.IOException;
@@ -34,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class MakeRegistrationFormController {
     public AnchorPane makeRegistrationContext;
@@ -60,9 +62,12 @@ public class MakeRegistrationFormController {
     public JFXButton btnAddReservation;
     public JFXButton btnCancel;
     public JFXButton btnAddNewStudent;
+    public Label lblNonACRoom;
+    public Label lblNonACFoodRoom;
+    public Label lblACRoom;
+    public Label lblACFoodRoom;
 
     private final ReservationBO reservationBO = (ReservationBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.RESERVATION);
-
 
     private String ResID;
 
@@ -106,7 +111,34 @@ public class MakeRegistrationFormController {
     }
 
     private void setRoomDetails(String selectedRoomId) {
+        if (selectedRoomId != null) {
+            try {
+                if (!existRoom(selectedRoomId + "")) {
+                    new Alert(Alert.AlertType.ERROR, "There is no such room associated with the id " + selectedRoomId + "").show();
+                }
 
+                List<RoomDTO> roomDTOList = reservationBO.searchRoom(selectedRoomId + "");
+
+                for (RoomDTO dto:roomDTOList) {
+                    txtRoomType.setText(dto.getType());
+                    txtKeyMoney.setText(dto.getKey_money());
+                    
+                    //------------room count eka change wenna one -------------------------------------
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            txtRoomType.clear();
+            txtKeyMoney.clear();
+            txtPayment.clear();
+            txtStatus.clear();
+        }
+    }
+
+    private boolean existRoom(String id) throws Exception {
+        return reservationBO.checkRoomIsAvailable(id);
     }
 
     private void setStudentDetails(String selectedStudentId) {
