@@ -24,6 +24,11 @@ public class ReservationBOImpl implements ReservationBO {
 
 
     @Override
+    public boolean addReservation(ReservationDTO reservationDTO) throws Exception {
+        return false;
+    }
+
+    @Override
     public List<StudentDTO> searchStudent(String id) throws Exception {
         List<Student> students = studentDAO.find(id);
         List<StudentDTO> studentList = new ArrayList<>();
