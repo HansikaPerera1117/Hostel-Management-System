@@ -1,6 +1,7 @@
 package lk.ijse.HostelManagementSystem.business;
 
 import lk.ijse.HostelManagementSystem.business.custom.impl.*;
+import lk.ijse.HostelManagementSystem.entity.Student;
 
 public class BOFactory {
     private static BOFactory boFactory;
@@ -14,7 +15,7 @@ public class BOFactory {
     }
 
     public enum BOTypes{
-        STUDENT, ROOM, RESERVATION,REMAINKEYMONEYSTUDENT,USER
+        STUDENT, ROOM, RESERVATION,REMAINKEYMONEYSTUDENT,USER,
     }
 
     public SuperBO getBO(BOTypes types){

@@ -8,11 +8,13 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -27,8 +29,12 @@ import lk.ijse.HostelManagementSystem.dto.ReservationDTO;
 import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.dto.StudentDTO;
 import lk.ijse.HostelManagementSystem.entity.Reservation;
+import lk.ijse.HostelManagementSystem.entity.Room;
+import lk.ijse.HostelManagementSystem.entity.Student;
+import lk.ijse.HostelManagementSystem.entity.SuperEntity;
 import lk.ijse.HostelManagementSystem.view.tm.CustomTM;
 import lk.ijse.HostelManagementSystem.view.tm.ReservationTM;
+import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -73,8 +79,18 @@ public class MakeRegistrationFormController {
     private final ReservationBO reservationBO = (ReservationBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.RESERVATION);
 
     private String ResID;
+    int oldACRoomCount;
+    int oldACFoodRoomCount ;
+    int oldNonACRoomCount;
+    int oldNonACFoodRoomCount;
 
     public void initialize(){
+
+        colRegID.setCellValueFactory(new PropertyValueFactory<>("res_id"));
+        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colStudentID.setCellValueFactory(new PropertyValueFactory<>("student_id"));
+        colRoomTypeID.setCellValueFactory(new PropertyValueFactory<>("room_type_id"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         cmbStudentID.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             enableOrDisableAddReservationButton();
@@ -87,13 +103,17 @@ public class MakeRegistrationFormController {
             setRoomDetails(newRoomId);
         });
 
+         oldACRoomCount = Integer.parseInt(lblACRoomCount.getText());
+         oldACFoodRoomCount = Integer.parseInt(lblACFoodRoomCount.getText());
+         oldNonACRoomCount = Integer.parseInt(lblNonACRoomCount.getText());
+         oldNonACFoodRoomCount = Integer.parseInt(lblNonACFoodRoomCount.getText());
+
         try {
             loadAllStudentIds();
             loadAllRoomIds();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         loadDateAndTime();
         initialUI();
@@ -127,27 +147,6 @@ public class MakeRegistrationFormController {
                     txtKeyMoney.setText(dto.getKey_money());
                     txtStatus.setEditable(false);
 
-                    //------------room count eka change wenna one -------------------------------------
-                    /*String oldACRoomCount = lblACRoomCount.getText();
-                    String oldACRoomFoodCount = lblACFoodRoomCount.getText();
-                    String oldNonACRoomCount = lblNonACRoomCount.getText();
-                    String oldNonACFoodRoomCount = lblNonACFoodRoomCount.getText();
-
-                    Optional<String> optRoomDetail1 =cmbRoomTypeID.getItems().stream().filter(detail -> lblNonACRoom.getText().equals(selectedRoomId)).findFirst();
-                    lblNonACRoomCount.setText((optRoomDetail1.isPresent() ? String.valueOf(Integer.parseInt(oldNonACRoomCount) - 1) : oldNonACRoomCount));
-
-                    if (lblNonACRoom.getText().equals(selectedRoomId)){
-                        lblNonACRoomCount.setText(String.valueOf(Integer.parseInt(lblNonACRoomCount.getText())-1));
-                    }else {
-                        lblNonACRoomCount.setText(oldNonACRoomCount);
-                    }
-                    if (lblNonACFoodRoom.getText().equals(selectedRoomId)){
-                        lblNonACFoodRoomCount.setText(String.valueOf(Integer.parseInt(lblNonACFoodRoomCount.getText())-1));
-                    }else if (lblACRoom.getText().equals(selectedRoomId)){
-                        lblACRoomCount.setText(String.valueOf(Integer.parseInt(lblACRoomCount.getText())-1));
-                    }else if (lblACFoodRoom.getText().equals(selectedRoomId)){
-                        lblACFoodRoomCount.setText(String.valueOf(Integer.parseInt(lblACFoodRoomCount.getText())-1));
-                    }*/
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -214,17 +213,76 @@ public class MakeRegistrationFormController {
         return null;
     }
 
+    public void txtSetStatusOnAction(ActionEvent actionEvent) {
+        double payment = Double.parseDouble(txtPayment.getText());
+        double keyMoney = Double.parseDouble(txtKeyMoney.getText());
+        double status = keyMoney - payment;
+        if (status == 0){
+            txtStatus.setText("paid");
+        }else {
+            txtStatus.setText(status + " is payable");
+        }
+        btnAddReservation.setDisable(false);
+    }
 
     public void btnAddReservationOnAction(ActionEvent actionEvent) {
+        tblReservation.getItems().clear();
+
         try {
-            reservationBO.addReservation(new ReservationDTO(ResID,LocalDate.now(),cmbStudentID.getValue(),cmbRoomTypeID.getValue(),txtStatus.getText()));
+            List<StudentDTO> studentDTOList = reservationBO.searchStudent(cmbStudentID.getValue());
+            for (StudentDTO dto:studentDTOList) {
+                Student entityStudent = new Student(dto.getStudent_id(), dto.getName(), dto.getAddress(), dto.getContact_no(), dto.getDob(), dto.getGender());
+
+                List<RoomDTO> roomDTOList = reservationBO.searchRoom(cmbRoomTypeID.getValue());
+                for (RoomDTO dto1 : roomDTOList) {
+                    Room room = new Room(dto1.getRoom_type_id(),dto1.getType(),dto1.getKey_money(),dto1.getQty());
+
+                    if (reservationBO.addReservation(new ReservationDTO(ResID, LocalDate.now(), entityStudent, room, txtStatus.getText()))) {
+
+                        tblReservation.getItems().add(new ReservationTM(ResID,LocalDate.now(),cmbStudentID.getValue(),cmbRoomTypeID.getValue(),txtStatus.getText()));
+
+                        Notifications notifications = Notifications.create().title("Add Reservation Successful !").text("Reservation has been added successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
+                        notifications.darkStyle();
+                        notifications.show();
+
+                        //-------------------update available room count--------------------------------
+
+                        String roomTypeId = cmbRoomTypeID.getValue();
+
+                        if (lblNonACRoom.getText().equals(roomTypeId)) {
+
+                            oldNonACRoomCount = oldNonACRoomCount - 1;
+                            lblNonACRoomCount.setText(String.valueOf(oldNonACRoomCount));
+
+                        } else if (lblNonACFoodRoom.getText().equals(roomTypeId)) {
+
+                            oldNonACFoodRoomCount=oldNonACFoodRoomCount-1;
+                            lblNonACFoodRoomCount.setText(String.valueOf(oldNonACFoodRoomCount));
+
+                        } else if (lblACRoom.getText().equals(roomTypeId)) {
+
+                            oldACRoomCount=oldACRoomCount-1;
+                            lblACRoomCount.setText(String.valueOf(oldACRoomCount));
+
+                        } else if (lblACFoodRoom.getText().equals(roomTypeId)) {
+
+                            oldACFoodRoomCount=oldACFoodRoomCount-1;
+                            lblACFoodRoomCount.setText(String.valueOf(oldACFoodRoomCount));
+
+                        }
+
+                    } else {
+                        new Alert(Alert.AlertType.ERROR, "Reservation has not been added successfully").show();
+                    }
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+        cancel();
     }
 
-    public void btnCancelOnAction(ActionEvent actionEvent) {
+    private void cancel() {
         // ResID = generateNewOrderId();
         lblRegID.setText("Reg ID :" + ResID);
         cmbStudentID.getSelectionModel().clearSelection();
@@ -232,6 +290,10 @@ public class MakeRegistrationFormController {
         tblReservation.getItems().clear();
         txtPayment.clear();
         txtStatus.clear();
+    }
+
+    public void btnCancelOnAction(ActionEvent actionEvent) {
+       cancel();
     }
 
     public void btnAddNewStudentOnAction(ActionEvent actionEvent) throws IOException {

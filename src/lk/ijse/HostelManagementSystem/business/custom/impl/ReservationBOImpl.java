@@ -9,7 +9,6 @@ import lk.ijse.HostelManagementSystem.entity.Reservation;
 import lk.ijse.HostelManagementSystem.entity.Room;
 import lk.ijse.HostelManagementSystem.entity.Student;
 import lk.ijse.HostelManagementSystem.repository.DAOFactory;
-import lk.ijse.HostelManagementSystem.repository.SuperDAO;
 import lk.ijse.HostelManagementSystem.repository.custom.ReservationDAO;
 import lk.ijse.HostelManagementSystem.repository.custom.RoomDAO;
 import lk.ijse.HostelManagementSystem.repository.custom.StudentDAO;
@@ -25,7 +24,12 @@ public class ReservationBOImpl implements ReservationBO {
 
     @Override
     public boolean addReservation(ReservationDTO reservationDTO) throws Exception {
-        return reservationDAO.add(new Reservation(reservationDTO.getRes_id(),reservationDTO.getDate(),reservationDTO.getStatus(),reservationDTO.getStudent_id(),reservationDTO.getRoom_type_id()));
+        /*Student student;
+        List<StudentDTO> studentDTOList = searchStudent(reservationDTO.getStudent_id());
+        for (StudentDTO dto:studentDTOList) {
+             student = new Student(dto.getStudent_id(),dto.getName(),dto.getAddress(),dto.getContact_no(),dto.getDob(),dto.getGender());
+        }*/
+        return reservationDAO.add(new Reservation(reservationDTO.getRes_id(),reservationDTO.getDate(),reservationDTO.getStatus(),reservationDTO.getStudent(),reservationDTO.getRoom()));
     }
 
     @Override

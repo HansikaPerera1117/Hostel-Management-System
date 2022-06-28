@@ -161,7 +161,7 @@
             <Font size="17.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtPayment" focusColor="BLACK" labelFloat="true" layoutX="40.0" layoutY="702.0" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="323.0" promptText="Payment :">
+      <JFXTextField fx:id="txtPayment" focusColor="BLACK" labelFloat="true" layoutX="40.0" layoutY="702.0" onAction="#txtSetStatusOnAction" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="323.0" promptText="Payment :">
          <font>
             <Font size="17.0" />
          </font>

@@ -28,11 +28,4 @@ public class Reservation implements SuperEntity{
     @JoinColumn(name = "room_type_id")
     private  Room room;
 
-    public Reservation(String res_id, LocalDate date, String status, String student_id, String room_type_id) {
-        this.res_id = res_id;
-        this.date = date;
-        this.status = status;
-        this.student.setStudent_id(student_id);
-        this.room.setRoom_type_id(room_type_id);
-    }
 }
