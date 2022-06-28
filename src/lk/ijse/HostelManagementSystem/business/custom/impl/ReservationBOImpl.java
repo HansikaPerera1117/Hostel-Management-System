@@ -3,6 +3,7 @@ package lk.ijse.HostelManagementSystem.business.custom.impl;
 import lk.ijse.HostelManagementSystem.business.custom.ReservationBO;
 import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.dto.StudentDTO;
+import lk.ijse.HostelManagementSystem.entity.Room;
 import lk.ijse.HostelManagementSystem.entity.Student;
 import lk.ijse.HostelManagementSystem.repository.DAOFactory;
 import lk.ijse.HostelManagementSystem.repository.custom.RoomDAO;
@@ -52,6 +53,11 @@ public class ReservationBOImpl implements ReservationBO {
 
     @Override
     public List<RoomDTO> getAllRooms() throws Exception {
-        return null;
+        List<Room> all = roomDAO.findAll();
+        List<RoomDTO> roomList = new ArrayList<>();
+        for (Room room : all) {
+            roomList.add(new RoomDTO(room.getRoom_type_id(), room.getType(), room.getKey_money(), room.getQty()));
+        }
+        return roomList;
     }
 }

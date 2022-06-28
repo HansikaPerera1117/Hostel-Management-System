@@ -23,6 +23,7 @@ import lk.ijse.HostelManagementSystem.business.SuperBO;
 import lk.ijse.HostelManagementSystem.business.custom.ReservationBO;
 import lk.ijse.HostelManagementSystem.business.custom.RoomBO;
 import lk.ijse.HostelManagementSystem.business.custom.StudentBO;
+import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.dto.StudentDTO;
 import lk.ijse.HostelManagementSystem.view.tm.ReservationTM;
 
@@ -90,8 +91,11 @@ public class MakeRegistrationFormController {
         initialUI();
     }
 
-    private void loadAllRoomIds() {
-
+    private void loadAllRoomIds() throws Exception {
+        List<RoomDTO> allRooms = reservationBO.getAllRooms();
+        for (RoomDTO dto:allRooms) {
+            cmbRoomTypeID.getItems().add(dto.getRoom_type_id());
+        }
     }
 
     private void loadAllStudentIds() throws Exception {
@@ -99,7 +103,6 @@ public class MakeRegistrationFormController {
         for (StudentDTO dto:allStudents) {
             cmbStudentID.getItems().add(dto.getStudent_id());
         }
-
     }
 
     private void setRoomDetails(String selectedRoomId) {
