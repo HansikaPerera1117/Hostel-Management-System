@@ -104,10 +104,15 @@ public class SearchRegistrationFormController {
         });
 
         tblSearchReservation.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, selectedReservationDetail) -> {
-            changeReservationDetails(selectedReservationDetail);
+            try {
+                changeReservationDetails(selectedReservationDetail);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
 
         loadDateAndTime();
+        initialUI();
 
         try {
             loadAllResIds();
@@ -118,12 +123,60 @@ public class SearchRegistrationFormController {
         }
     }
 
+    private void initialUI() {
+        btnConfirmEdits.setDisable(true);
+        btnRemoveReservation.setDisable(true);
+        btnUpdate.setDisable(true);
+        txtStudentName.setFocusTraversable(false);
+        txtStudentName.setEditable(false);
+        txtRoomTypeID.setFocusTraversable(false);
+        txtRoomTypeID.setEditable(false);
+        txtRoomType.setFocusTraversable(false);
+        txtRoomType.setEditable(false);
+        txtKeyMoney.setFocusTraversable(false);
+        txtKeyMoney.setEditable(false);
+        txtStatus.setOnAction(event -> btnUpdate.fire());
+        txtStatus.setEditable(false);
+    }
 
 
-    private void setRegIdsAccordingToRoomTypeId(String selectedRoomId) {
+    private void changeReservationDetails(ReservationTM selectedReservationDetail) throws Exception {
+        if (selectedReservationDetail != null) {
+            cmbRegID.setDisable(true);
+            cmbStudentID.setDisable(true);
+            cmbRoomID.setDisable(true);
+            List<StudentDTO> studentDTOList = searchRegistrationBO.searchStudentDetails(selectedReservationDetail.getStudent_id());
+            for (StudentDTO dto : studentDTOList) {
+                txtStudentName.setText(dto.getName());
+            }
+            txtRoomTypeID.setText(selectedReservationDetail.getRoom_type_id());
+            List<RoomDTO> roomDTOList = searchRegistrationBO.searchRoomDetails(selectedReservationDetail.getRoom_type_id());
+            for (RoomDTO dto : roomDTOList) {
+                txtRoomType.setText(dto.getType());
+                txtKeyMoney.setText(dto.getKey_money());
+            }
+            txtStatus.setText(selectedReservationDetail.getStatus());
+            txtStatus.setEditable(true);
+            btnUpdate.setDisable(false);
+        } else {
+            cmbRegID.setDisable(false);
+            cmbStudentID.setDisable(false);
+            cmbRoomID.setDisable(false);
+            cmbRegID.getSelectionModel().clearSelection();
+            cmbRoomID.getSelectionModel().clearSelection();
+            cmbStudentID.getSelectionModel().clearSelection();
+            txtStudentName.clear();
+            txtRoomTypeID.clear();
+            txtRoomType.clear();
+            txtKeyMoney.clear();
+            txtStatus.clear();
+        }
+    }
+
+    private void setRegIdsAccordingToStudentId(String selectedStudentId) {
         try {
-            List<ReservationDTO> allReservationsAccordingToRoom = searchRegistrationBO.getAllReservationsAccordingToRoom(selectedRoomId);
-            for (ReservationDTO dto:allReservationsAccordingToRoom) {
+            List<ReservationDTO> allReservationsAccordingToStudent = searchRegistrationBO.getAllReservationsAccordingToStudent(selectedStudentId);
+            for (ReservationDTO dto:allReservationsAccordingToStudent) {
                 cmbRegID.getItems().add(dto.getRes_id());
             }
         } catch (Exception e) {
@@ -132,14 +185,10 @@ public class SearchRegistrationFormController {
         }
     }
 
-    private void changeReservationDetails(ReservationTM selectedReservationDetail) {
-
-    }
-
-    private void setRegIdsAccordingToStudentId(String selectedStudentId) {
+    private void setRegIdsAccordingToRoomTypeId(String selectedRoomId) {
         try {
-            List<ReservationDTO> allReservationsAccordingToStudent = searchRegistrationBO.getAllReservationsAccordingToStudent(selectedStudentId);
-            for (ReservationDTO dto:allReservationsAccordingToStudent) {
+            List<ReservationDTO> allReservationsAccordingToRoom = searchRegistrationBO.getAllReservationsAccordingToRoom(selectedRoomId);
+            for (ReservationDTO dto:allReservationsAccordingToRoom) {
                 cmbRegID.getItems().add(dto.getRes_id());
             }
         } catch (Exception e) {

@@ -20,6 +20,10 @@ public interface SearchRegistrationBO extends SuperBO {
 
     List<ReservationDTO> searchReservationDetails(String id) throws Exception;
 
+    List<RoomDTO> searchRoomDetails(String id) throws Exception;
+
+    List<StudentDTO> searchStudentDetails(String id) throws Exception;
+
     boolean reservationExist(String id) throws Exception;
 
 }

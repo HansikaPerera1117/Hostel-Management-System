@@ -82,6 +82,26 @@ public class SearchRegistrationBOImpl implements SearchRegistrationBO {
     }
 
     @Override
+    public List<RoomDTO> searchRoomDetails(String id) throws Exception {
+        List<Room> roomList = roomDAO.find(id);
+        List<RoomDTO>detailList = new ArrayList<>();
+        for (Room room : roomList) {
+            detailList.add(new RoomDTO(room.getRoom_type_id(),room.getType(),room.getKey_money(),room.getQty()));
+        }
+        return detailList;
+    }
+
+    @Override
+    public List<StudentDTO> searchStudentDetails(String id) throws Exception {
+        List<Student> students = studentDAO.find(id);
+        List<StudentDTO> detailList = new ArrayList<>();
+        for (Student student : students) {
+            detailList.add(new StudentDTO(student.getStudent_id(),student.getName(),student.getAddress(),student.getContact_no(),student.getDob(),student.getGender()));
+        }
+        return detailList;
+    }
+
+    @Override
     public boolean reservationExist(String id) throws Exception {
        return reservationDAO.exist(id);
     }
