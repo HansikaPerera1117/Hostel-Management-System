@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -24,6 +25,7 @@ import lk.ijse.HostelManagementSystem.dto.ReservationDTO;
 import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.dto.StudentDTO;
 import lk.ijse.HostelManagementSystem.view.tm.ReservationTM;
+import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -65,6 +67,8 @@ public class SearchRegistrationFormController {
 
 
     private String selectedRegId=null;
+    String nonUpdateStatus = null;
+
 
     private final SearchRegistrationBO searchRegistrationBO = (SearchRegistrationBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.SEARCHREGISTRATION);
 
@@ -138,7 +142,6 @@ public class SearchRegistrationFormController {
         txtStatus.setOnAction(event -> btnUpdate.fire());
         txtStatus.setEditable(false);
     }
-
 
     private void changeReservationDetails(ReservationTM selectedReservationDetail) throws Exception {
         if (selectedReservationDetail != null) {
@@ -262,6 +265,33 @@ public class SearchRegistrationFormController {
     }
 
     public void btnUpdateOnAction(ActionEvent actionEvent) {
+        String roomID = txtRoomTypeID.getText();
+        String updateStatus = txtStatus.getText();
+
+        boolean exists = tblSearchReservation.getItems().stream().anyMatch(detail -> detail.getRoom_type_id().equals(roomID));
+
+        if (exists) {
+            if (tblSearchReservation.getSelectionModel().getSelectedItem() != null) {
+                ReservationTM selectedItem = tblSearchReservation.getSelectionModel().getSelectedItem();
+                nonUpdateStatus = selectedItem.getStatus();
+                selectedItem.setStatus(updateStatus);
+                tblSearchReservation.refresh();
+                btnConfirmEdits.setDisable(false);
+
+                Notifications notifications = Notifications.create().title("Successful !").text("Reservation status has been updated successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
+                notifications.darkStyle();
+                notifications.show();
+            }
+            tblSearchReservation.refresh();
+        } else{
+            new Alert(Alert.AlertType.ERROR, "Room not exists").show();
+        }
+
+        txtStudentName.clear();
+        txtRoomTypeID.clear();
+        txtRoomType.clear();;
+        txtKeyMoney.clear();
+        txtStatus.clear();
     }
 
     public void btnConfirmEditsOnAction(ActionEvent actionEvent) {
