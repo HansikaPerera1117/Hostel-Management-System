@@ -74,9 +74,9 @@ public class ReservationDAOImpl implements ReservationDAO {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
-        String hql = "FROM Reservation WHERE student.student_id = : s_id ";
+        String hql = "FROM Reservation WHERE res_id = : reservation_id ";
         Query query = session.createQuery(hql);
-        query.setParameter("s_id",id);
+        query.setParameter("reservation_id",id);
         List<Reservation> reservation_Id = query.list();
 
         transaction.commit();
@@ -98,4 +98,18 @@ public class ReservationDAOImpl implements ReservationDAO {
         return reservationList;
     }
 
+    @Override
+    public List<Reservation> getAllReservationsAccordingToStudent(String id) throws Exception {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "FROM Reservation WHERE student.student_id = : s_id ";
+        Query query = session.createQuery(hql);
+        query.setParameter("s_id",id);
+        List<Reservation> reservation_Id = query.list();
+
+        transaction.commit();
+        session.close();
+        return reservation_Id;
+    }
 }

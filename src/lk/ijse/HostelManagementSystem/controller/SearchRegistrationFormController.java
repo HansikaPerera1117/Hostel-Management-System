@@ -9,10 +9,8 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -26,8 +24,13 @@ import lk.ijse.HostelManagementSystem.dto.StudentDTO;
 import lk.ijse.HostelManagementSystem.view.tm.ReservationTM;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +66,13 @@ public class SearchRegistrationFormController {
 
 
     public void initialize(){
+
+        colRegID.setCellValueFactory(new PropertyValueFactory<>("res_id"));
+        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colStudentID.setCellValueFactory(new PropertyValueFactory<>("student_id"));
+        colRoomTypeID.setCellValueFactory(new PropertyValueFactory<>("room_type_id"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colDelete.setCellValueFactory(new PropertyValueFactory<>("btn"));
 
         cmbRegID.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedRegId=newValue;
@@ -101,10 +111,48 @@ public class SearchRegistrationFormController {
         }
     }
 
-    private void setRegDetailsToTable(String newValue) {
+    private void setRegDetailsToTable(String selectedResId) {
+        tblSearchReservation.getItems().clear();
+
+        if (selectedResId != null) {
+                try {
+                    if (!existReservation(selectedResId + "")) {
+                        new Alert(Alert.AlertType.ERROR, "There is no such reservation associated with the id " + selectedResId + "").show();
+                        btnRemoveReservation.setDisable(true);
+                    }
+                    btnRemoveReservation.setDisable(false);
+                    List<ReservationDTO> reservationDTOS = searchRegistrationBO.searchReservationDetails(selectedResId + "");
+                    for (ReservationDTO dto : reservationDTOS) {
+
+                        lblStudentID.setText("Student ID :"+dto.getStudent().getStudent_id());
+                        lblRegDate.setText("Reg date :"+dto.getDate());
+
+                        String res_id = dto.getRes_id();
+                        LocalDate date = dto.getDate();
+                        String student_id = dto.getStudent().getStudent_id();
+                        String room_type_id = dto.getRoom().getRoom_type_id();
+                        String status = dto.getStatus();
+
+                        Button btn = new Button("Delete");
+
+                        tblSearchReservation.getItems().add(new ReservationTM(res_id,date,student_id,room_type_id,status,btn));
+                    }
+
+                } catch (Exception e) {
+                    new Alert(Alert.AlertType.ERROR, "Failed to find the reservation " + selectedResId + "" + e).show();
+                }
+
+        } else {
+            tblSearchReservation.getItems().clear();
+        }
+    }
+
+    private boolean existReservation(String id) throws Exception {
+       return searchRegistrationBO.reservationExist(id);
     }
 
     private void enableOrDisableRemoveReservationButton() {
+        btnRemoveReservation.setDisable(!(cmbRegID.getSelectionModel().getSelectedItem() != null && !tblSearchReservation.getItems().isEmpty()));
     }
 
     private void loadAllStudentIds() throws Exception {

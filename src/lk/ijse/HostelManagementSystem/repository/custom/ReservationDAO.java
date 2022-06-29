@@ -7,5 +7,5 @@ import java.util.List;
 
 
 public interface ReservationDAO extends CrudDAO<Reservation,String> {
-
+     List<Reservation> getAllReservationsAccordingToStudent(String id) throws Exception;
 }
