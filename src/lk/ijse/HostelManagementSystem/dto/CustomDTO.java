@@ -37,4 +37,5 @@ public class CustomDTO {
         this.date = date;
         this.status = status;
     }
+
 }

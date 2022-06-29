@@ -25,4 +25,5 @@ public class ReservationTM {
         this.room_type_id = room_type_id;
         this.status = status;
     }
+
 }

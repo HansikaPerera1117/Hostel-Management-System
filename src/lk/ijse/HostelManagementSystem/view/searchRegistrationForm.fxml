@@ -57,18 +57,18 @@
             <Font size="18.0" />
          </font>
       </JFXButton>
-      <Label fx:id="lblStudentID" layoutX="879.0" layoutY="116.0" prefHeight="32.0" prefWidth="250.0" text="Student ID :P/1443">
+      <Label fx:id="lblStudentID" layoutX="879.0" layoutY="116.0" prefHeight="32.0" prefWidth="250.0" text="Student ID :">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
       </Label>
-      <Label fx:id="lblRegID" layoutX="402.0" layoutY="116.0" prefHeight="32.0" prefWidth="216.0" text="Reg_ID : R00-001">
+      <Label fx:id="lblRegID" layoutX="402.0" layoutY="116.0" prefHeight="32.0" prefWidth="216.0" text="Reg_ID : ">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
       </Label>
       <JFXComboBox fx:id="cmbStudentID" focusColor="BLACK" labelFloat="true" layoutX="223.0" layoutY="140.0" prefHeight="31.0" prefWidth="129.0" promptText="Student ID :" visibleRowCount="5" />
-      <Label fx:id="lblRegDate" layoutX="633.0" layoutY="118.0" prefHeight="32.0" prefWidth="225.0" text="Reg date :2022-11-17">
+      <Label fx:id="lblRegDate" layoutX="633.0" layoutY="118.0" prefHeight="32.0" prefWidth="225.0" text="Reg date :">
          <font>
             <Font size="22.0" />
          </font>

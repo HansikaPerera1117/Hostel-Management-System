@@ -24,11 +24,6 @@ public class ReservationBOImpl implements ReservationBO {
 
     @Override
     public boolean addReservation(ReservationDTO reservationDTO) throws Exception {
-        /*Student student;
-        List<StudentDTO> studentDTOList = searchStudent(reservationDTO.getStudent_id());
-        for (StudentDTO dto:studentDTOList) {
-             student = new Student(dto.getStudent_id(),dto.getName(),dto.getAddress(),dto.getContact_no(),dto.getDob(),dto.getGender());
-        }*/
         return reservationDAO.add(new Reservation(reservationDTO.getRes_id(),reservationDTO.getDate(),reservationDTO.getStatus(),reservationDTO.getStudent(),reservationDTO.getRoom()));
     }
 
@@ -80,6 +75,16 @@ public class ReservationBOImpl implements ReservationBO {
             roomList.add(new RoomDTO(room.getRoom_type_id(), room.getType(), room.getKey_money(), room.getQty()));
         }
         return roomList;
+    }
+
+    @Override
+    public List<ReservationDTO> getAllReservations() throws Exception {
+        List<Reservation> all = reservationDAO.findAll();
+        List<ReservationDTO>reservationDTOS = new ArrayList<>();
+        for (Reservation reservation:all) {
+            reservationDTOS.add(new ReservationDTO(reservation.getRes_id(),reservation.getDate(),reservation.getStudent(),reservation.getRoom(),reservation.getStatus()));
+        }
+        return reservationDTOS;
     }
 
 }

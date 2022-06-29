@@ -20,4 +20,16 @@ public class ReservationDTO {
     private Room room;
     private String status;
 
+    private int ACRoomCount ;
+    private int ACFoodRoomCount ;
+    private int NonACRoomCount ;
+    private int NonACFoodRoomCount ;
+
+    public ReservationDTO(String resID, LocalDate date, Student student, Room room, String status) {
+        this.res_id = resID;
+        this.date = date;
+        this.student = student;
+        this.room = room;
+        this.status = status;
+    }
 }
