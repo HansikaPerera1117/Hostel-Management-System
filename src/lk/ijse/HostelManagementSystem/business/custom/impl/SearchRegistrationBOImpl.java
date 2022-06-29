@@ -22,6 +22,11 @@ public class SearchRegistrationBOImpl implements SearchRegistrationBO {
 
 
     @Override
+    public boolean updateReservation(ReservationDTO reservationDTO) throws Exception {
+       return reservationDAO.update(new Reservation(reservationDTO.getRes_id(),reservationDTO.getDate(),reservationDTO.getStatus(),reservationDTO.getStudent(),reservationDTO.getRoom()));
+    }
+
+    @Override
     public List<StudentDTO> getAllStudents() throws Exception {
         List<Student> all = studentDAO.findAll();
         List<StudentDTO>studentList = new ArrayList<>();

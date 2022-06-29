@@ -8,6 +8,8 @@ import lk.ijse.HostelManagementSystem.dto.StudentDTO;
 import java.util.List;
 
 public interface SearchRegistrationBO extends SuperBO {
+    boolean updateReservation(ReservationDTO reservationDTO) throws Exception;
+
     List<StudentDTO> getAllStudents() throws Exception;
 
     List<RoomDTO> getAllRooms() throws Exception;

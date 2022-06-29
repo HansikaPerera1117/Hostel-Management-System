@@ -7,6 +7,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -24,6 +25,8 @@ import lk.ijse.HostelManagementSystem.business.custom.SearchRegistrationBO;
 import lk.ijse.HostelManagementSystem.dto.ReservationDTO;
 import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.dto.StudentDTO;
+import lk.ijse.HostelManagementSystem.entity.Room;
+import lk.ijse.HostelManagementSystem.entity.Student;
 import lk.ijse.HostelManagementSystem.view.tm.ReservationTM;
 import org.controlsfx.control.Notifications;
 
@@ -66,8 +69,8 @@ public class SearchRegistrationFormController {
     public Label lblTime;
 
 
-    private String selectedRegId=null;
-    String nonUpdateStatus = null;
+    private String selectedRegId = null;
+    private String updateStatus = null;
 
 
     private final SearchRegistrationBO searchRegistrationBO = (SearchRegistrationBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.SEARCHREGISTRATION);
@@ -266,14 +269,13 @@ public class SearchRegistrationFormController {
 
     public void btnUpdateOnAction(ActionEvent actionEvent) {
         String roomID = txtRoomTypeID.getText();
-        String updateStatus = txtStatus.getText();
+        updateStatus = txtStatus.getText();
 
         boolean exists = tblSearchReservation.getItems().stream().anyMatch(detail -> detail.getRoom_type_id().equals(roomID));
 
         if (exists) {
             if (tblSearchReservation.getSelectionModel().getSelectedItem() != null) {
                 ReservationTM selectedItem = tblSearchReservation.getSelectionModel().getSelectedItem();
-                nonUpdateStatus = selectedItem.getStatus();
                 selectedItem.setStatus(updateStatus);
                 tblSearchReservation.refresh();
                 btnConfirmEdits.setDisable(false);
@@ -295,9 +297,69 @@ public class SearchRegistrationFormController {
     }
 
     public void btnConfirmEditsOnAction(ActionEvent actionEvent) {
+        try {
+            if (!existReservation(selectedRegId)) {
+                new Alert(Alert.AlertType.ERROR, "There is no such reservation associated with the id " + selectedRegId ).show();
+            }
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure?", ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> buttonType = alert.showAndWait();
+
+            if (buttonType.get().equals(ButtonType.YES)) {
+
+                ObservableList<ReservationTM> items = tblSearchReservation.getItems();
+                boolean b= false;
+                for (ReservationTM reservationTM: items) {
+                    List<StudentDTO> studentDTOList = searchRegistrationBO.searchStudentDetails(reservationTM.getStudent_id());
+                    for (StudentDTO dto : studentDTOList) {
+                        Student student = new Student(dto.getStudent_id(), dto.getName(), dto.getAddress(), dto.getContact_no(), dto.getDob(), dto.getGender());
+
+                        List<RoomDTO> roomDTOList = searchRegistrationBO.searchRoomDetails(reservationTM.getRoom_type_id());
+                        for (RoomDTO dto1 : roomDTOList) {
+                            Room room = new Room(dto1.getRoom_type_id(), dto1.getType(), dto1.getKey_money(), dto1.getQty());
+
+                            if(searchRegistrationBO.updateReservation(new ReservationDTO(selectedRegId, reservationTM.getDate(), student, room, updateStatus))){
+                                new Alert(Alert.AlertType.INFORMATION, "Reservation details has been updated successfully").show();
+                            }
+
+                        }
+                    }
+                }
+
+            }else {
+                cancelSearching();
+            }
+
+        } catch (Exception e ) {
+            e.printStackTrace();
+        }
+        btnConfirmEdits.setDisable(true);
     }
 
-    public void btnCancelOnAction(ActionEvent actionEvent) {
+    private void cancelSearching() throws Exception {
+        btnUpdate.setDisable(true);
+        btnConfirmEdits.setDisable(true);
+        btnRemoveReservation.setDisable(true);
+        cmbRegID.setDisable(false);
+        cmbStudentID.setDisable(false);
+        cmbRoomID.setDisable(false);
+        cmbRegID.getSelectionModel().clearSelection();
+        cmbStudentID.getSelectionModel().clearSelection();
+        cmbRoomID.getSelectionModel().clearSelection();
+        lblRegID.setText("Reg_ID : ");
+        lblRegDate.setText("Reg date :");
+        lblStudentID.setText("Student ID :");
+        txtStudentName.clear();
+        txtRoomTypeID.clear();
+        txtRoomType.clear();;
+        txtKeyMoney.clear();
+        txtStatus.clear();
+        tblSearchReservation.getItems().clear();
+        loadAllResIds();
+    }
+
+    public void btnCancelOnAction(ActionEvent actionEvent) throws Exception {
+        cancelSearching();
     }
 
     public void btnRemoveReservationOnAction(ActionEvent actionEvent) {
@@ -328,6 +390,7 @@ public class SearchRegistrationFormController {
         );
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+
     }
 
 
