@@ -112,4 +112,19 @@ public class ReservationDAOImpl implements ReservationDAO {
         session.close();
         return reservation_Id;
     }
+
+    @Override
+    public List<Reservation> getAllReservationsAccordingToRoom(String id) throws Exception {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "FROM Reservation WHERE room.room_type_id = : room_id ";
+        Query query = session.createQuery(hql);
+        query.setParameter("room_id",id);
+        List<Reservation> reservation_Id = query.list();
+
+        transaction.commit();
+        session.close();
+        return reservation_Id;
+    }
 }

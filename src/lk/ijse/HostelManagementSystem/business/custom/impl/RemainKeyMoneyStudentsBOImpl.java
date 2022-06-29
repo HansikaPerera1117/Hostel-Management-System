@@ -20,6 +20,7 @@ public class RemainKeyMoneyStudentsBOImpl implements RemainKeyMoneyStudentsBO {
         for (CustomEntity entity : customEntityList) {
             list.add(new CustomDTO(entity.getStudent_id(),entity.getName(),entity.getContact_no(),entity.getRes_id(),entity.getRoom_type_id(),entity.getDate(),entity.getStatus()));
         }
+
         return list;
 
      /*   List<CustomEntity> remainKeyMoneyStudents = queryDAO.remainKeyMoneyStudents();

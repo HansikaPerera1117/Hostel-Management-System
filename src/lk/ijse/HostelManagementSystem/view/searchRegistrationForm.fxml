@@ -75,14 +75,13 @@
       </Label>
       <Label layoutX="28.0" layoutY="96.0" prefHeight="31.0" prefWidth="137.0" text="Search Reservation " />
       <Label layoutX="221.0" layoutY="96.0" prefHeight="31.0" prefWidth="123.0" text="Search Student " />
-      <TableView fx:id="tblSearchReservation" layoutX="43.0" layoutY="440.0" prefHeight="254.0" prefWidth="1060.0">
+      <TableView fx:id="tblSearchReservation" layoutX="187.0" layoutY="440.0" prefHeight="254.0" prefWidth="916.0">
          <columns>
-            <TableColumn fx:id="colRegID" prefWidth="149.0" text="Reg_ID" />
-            <TableColumn fx:id="colDate" prefWidth="196.0" text="Date" />
-            <TableColumn fx:id="colStudentID" prefWidth="189.0" text="Student ID" />
-            <TableColumn fx:id="colRoomTypeID" prefWidth="198.0" text="Room Type ID" />
-            <TableColumn fx:id="colStatus" prefWidth="207.0" text="Status" />
-            <TableColumn fx:id="colDelete" prefWidth="120.0" text="Delete" />
+            <TableColumn fx:id="colRegID" prefWidth="135.0" text="Reg_ID" />
+            <TableColumn fx:id="colDate" prefWidth="182.0" text="Date" />
+            <TableColumn fx:id="colStudentID" prefWidth="201.0" text="Student ID" />
+            <TableColumn fx:id="colRoomTypeID" prefWidth="199.0" text="Room Type ID" />
+            <TableColumn fx:id="colStatus" prefWidth="198.0" text="Status" />
          </columns>
       </TableView>
       <JFXTextField fx:id="txtStudentName" focusColor="BLACK" labelFloat="true" layoutX="402.0" layoutY="182.0" prefHeight="38.0" prefWidth="677.0" promptText="Student Name :">
@@ -116,6 +115,13 @@
          </effect>
       </Separator>
       <Separator layoutX="376.0" layoutY="98.0" orientation="VERTICAL" prefHeight="315.0" prefWidth="8.0">
+         <effect>
+            <ColorAdjust brightness="-0.45" contrast="0.23" />
+         </effect>
+      </Separator>
+      <JFXComboBox fx:id="cmbRoomID" focusColor="BLACK" labelFloat="true" layoutX="15.0" layoutY="447.0" prefHeight="31.0" prefWidth="146.0" promptText="Room Type ID :" visibleRowCount="5" />
+      <Label layoutX="19.0" layoutY="403.0" prefHeight="31.0" prefWidth="137.0" text="Search Room " />
+      <Separator layoutX="11.0" layoutY="394.0" prefHeight="3.0" prefWidth="164.0">
          <effect>
             <ColorAdjust brightness="-0.45" contrast="0.23" />
          </effect>

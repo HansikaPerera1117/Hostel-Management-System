@@ -2,8 +2,10 @@ package lk.ijse.HostelManagementSystem.business.custom.impl;
 
 import lk.ijse.HostelManagementSystem.business.custom.SearchRegistrationBO;
 import lk.ijse.HostelManagementSystem.dto.ReservationDTO;
+import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.dto.StudentDTO;
 import lk.ijse.HostelManagementSystem.entity.Reservation;
+import lk.ijse.HostelManagementSystem.entity.Room;
 import lk.ijse.HostelManagementSystem.entity.Student;
 import lk.ijse.HostelManagementSystem.repository.DAOFactory;
 import lk.ijse.HostelManagementSystem.repository.custom.ReservationDAO;
@@ -30,6 +32,16 @@ public class SearchRegistrationBOImpl implements SearchRegistrationBO {
     }
 
     @Override
+    public List<RoomDTO> getAllRooms() throws Exception {
+        List<Room> all = roomDAO.findAll();
+        List<RoomDTO>roomDTOList = new ArrayList<>();
+        for (Room room : all) {
+            roomDTOList.add(new RoomDTO(room.getRoom_type_id(),room.getType(),room.getKey_money(),room.getQty()));
+        }
+        return roomDTOList;
+    }
+
+    @Override
     public List<ReservationDTO> getAllReservations() throws Exception {
         List<Reservation> all = reservationDAO.findAll();
         List<ReservationDTO>reservationDTOS = new ArrayList<>();
@@ -44,6 +56,16 @@ public class SearchRegistrationBOImpl implements SearchRegistrationBO {
         List<Reservation> reservationList = reservationDAO.getAllReservationsAccordingToStudent(id);
         List<ReservationDTO>reservationDTOS = new ArrayList<>();
         for (Reservation reservation:reservationList) {
+            reservationDTOS.add(new ReservationDTO(reservation.getRes_id(),reservation.getDate(),reservation.getStudent(),reservation.getRoom(),reservation.getStatus()));
+        }
+        return reservationDTOS;
+    }
+
+    @Override
+    public List<ReservationDTO> getAllReservationsAccordingToRoom(String id) throws Exception {
+        List<Reservation> allReservationsAccordingToRoom = reservationDAO.getAllReservationsAccordingToRoom(id);
+        List<ReservationDTO>reservationDTOS = new ArrayList<>();
+        for (Reservation reservation:allReservationsAccordingToRoom) {
             reservationDTOS.add(new ReservationDTO(reservation.getRes_id(),reservation.getDate(),reservation.getStudent(),reservation.getRoom(),reservation.getStatus()));
         }
         return reservationDTOS;

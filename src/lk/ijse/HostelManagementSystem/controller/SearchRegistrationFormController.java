@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,6 +21,7 @@ import lk.ijse.HostelManagementSystem.business.BOFactory;
 import lk.ijse.HostelManagementSystem.business.SuperBO;
 import lk.ijse.HostelManagementSystem.business.custom.SearchRegistrationBO;
 import lk.ijse.HostelManagementSystem.dto.ReservationDTO;
+import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.dto.StudentDTO;
 import lk.ijse.HostelManagementSystem.view.tm.ReservationTM;
 
@@ -33,11 +35,13 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class SearchRegistrationFormController {
     public AnchorPane searchRegistrationContext;
     public JFXComboBox<String>cmbRegID;
     public JFXComboBox<String> cmbStudentID;
+    public JFXComboBox<String> cmbRoomID;
     public JFXButton btnUpdate;
     public JFXButton btnConfirmEdits;
     public JFXButton btnCancel;
@@ -51,7 +55,6 @@ public class SearchRegistrationFormController {
     public TableColumn colStudentID;
     public TableColumn colRoomTypeID;
     public TableColumn colStatus;
-    public TableColumn colDelete;
     public JFXTextField txtStudentName;
     public JFXTextField txtKeyMoney;
     public JFXTextField txtRoomType;
@@ -59,6 +62,7 @@ public class SearchRegistrationFormController {
     public JFXTextField txtRoomTypeID;
     public Label lblDate;
     public Label lblTime;
+
 
     private String selectedRegId=null;
 
@@ -72,13 +76,13 @@ public class SearchRegistrationFormController {
         colStudentID.setCellValueFactory(new PropertyValueFactory<>("student_id"));
         colRoomTypeID.setCellValueFactory(new PropertyValueFactory<>("room_type_id"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        colDelete.setCellValueFactory(new PropertyValueFactory<>("btn"));
 
         cmbRegID.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedRegId=newValue;
             enableOrDisableRemoveReservationButton();
             setRegDetailsToTable(newValue);
             lblRegID.setText("Reg_ID : "+newValue);
+
         });
 
         cmbStudentID.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -87,16 +91,49 @@ public class SearchRegistrationFormController {
             lblRegID.setText("Reg_ID : ");
             lblStudentID.setText("Student ID :"+newValue);
             lblRegDate.setText("Reg date :");
+            //cmbRoomID.getSelectionModel().clearSelection();
         });
 
-       loadDateAndTime();
+        cmbRoomID.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            cmbRegID.getItems().clear();
+            setRegIdsAccordingToRoomTypeId(newValue);
+            lblRegID.setText("Reg_ID : ");
+            lblStudentID.setText("Student ID :");
+            lblRegDate.setText("Reg date :");
+            //cmbStudentID.getSelectionModel().clearSelection();
+        });
+
+        tblSearchReservation.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, selectedReservationDetail) -> {
+            changeReservationDetails(selectedReservationDetail);
+        });
+
+        loadDateAndTime();
 
         try {
             loadAllResIds();
             loadAllStudentIds();
+            loadAllRoomIds();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+
+    private void setRegIdsAccordingToRoomTypeId(String selectedRoomId) {
+        try {
+            List<ReservationDTO> allReservationsAccordingToRoom = searchRegistrationBO.getAllReservationsAccordingToRoom(selectedRoomId);
+            for (ReservationDTO dto:allReservationsAccordingToRoom) {
+                cmbRegID.getItems().add(dto.getRes_id());
+            }
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to load reservation ids").show();
+            e.printStackTrace();
+        }
+    }
+
+    private void changeReservationDetails(ReservationTM selectedReservationDetail) {
+
     }
 
     private void setRegIdsAccordingToStudentId(String selectedStudentId) {
@@ -133,9 +170,7 @@ public class SearchRegistrationFormController {
                         String room_type_id = dto.getRoom().getRoom_type_id();
                         String status = dto.getStatus();
 
-                        Button btn = new Button("Delete");
-
-                        tblSearchReservation.getItems().add(new ReservationTM(res_id,date,student_id,room_type_id,status,btn));
+                        tblSearchReservation.getItems().add(new ReservationTM(res_id,date,student_id,room_type_id,status));
                     }
 
                 } catch (Exception e) {
@@ -160,6 +195,14 @@ public class SearchRegistrationFormController {
         for (StudentDTO dto:allStudents) {
             cmbStudentID.getItems().add(dto.getStudent_id());
         }
+    }
+
+    private void loadAllRoomIds() throws Exception {
+        List<RoomDTO> allRooms = searchRegistrationBO.getAllRooms();
+        for (RoomDTO dto : allRooms) {
+            cmbRoomID.getItems().add(dto.getRoom_type_id());
+        }
+
     }
 
     private void loadAllResIds() throws Exception {
