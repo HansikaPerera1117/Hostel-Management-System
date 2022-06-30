@@ -6,7 +6,6 @@ import lk.ijse.HostelManagementSystem.util.FactoryConfiguration;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class QueryDAOImpl implements QueryDAO {

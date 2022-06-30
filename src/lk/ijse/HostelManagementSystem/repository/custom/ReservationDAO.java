@@ -12,4 +12,5 @@ public interface ReservationDAO extends CrudDAO<Reservation,String> {
 
      List<Reservation> getAllReservationsAccordingToRoom(String id) throws Exception;
 
-     }
+      String generateNewReservationId() throws Exception;
+}

@@ -86,4 +86,9 @@ public class ReservationBOImpl implements ReservationBO {
         return reservationDTOS;
     }
 
+    @Override
+    public String generateNewReservationId() throws Exception {
+       return reservationDAO.generateNewReservationId();
+    }
+
 }

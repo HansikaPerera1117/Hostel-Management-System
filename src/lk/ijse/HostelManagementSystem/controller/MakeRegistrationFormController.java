@@ -21,30 +21,20 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.HostelManagementSystem.business.BOFactory;
-import lk.ijse.HostelManagementSystem.business.SuperBO;
 import lk.ijse.HostelManagementSystem.business.custom.ReservationBO;
-import lk.ijse.HostelManagementSystem.business.custom.RoomBO;
-import lk.ijse.HostelManagementSystem.business.custom.StudentBO;
 import lk.ijse.HostelManagementSystem.dto.ReservationDTO;
 import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.dto.StudentDTO;
-import lk.ijse.HostelManagementSystem.entity.Reservation;
 import lk.ijse.HostelManagementSystem.entity.Room;
 import lk.ijse.HostelManagementSystem.entity.Student;
-import lk.ijse.HostelManagementSystem.entity.SuperEntity;
-import lk.ijse.HostelManagementSystem.view.tm.CustomTM;
 import lk.ijse.HostelManagementSystem.view.tm.ReservationTM;
 import org.controlsfx.control.Notifications;
-
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public class MakeRegistrationFormController {
     public AnchorPane makeRegistrationContext;
@@ -79,11 +69,6 @@ public class MakeRegistrationFormController {
     private final ReservationBO reservationBO = (ReservationBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.RESERVATION);
 
     private String ResID;
-    int beginNonACRoomCount =35;
-    int beginNonACFoodRoomCount= 20;
-    int beginACRoomCount =14;
-    int beginACFoodRoomCount =10;
-
 
     public void initialize(){
 
@@ -115,7 +100,11 @@ public class MakeRegistrationFormController {
         }
 
         loadDateAndTime();
-        initialUI();
+        try {
+            initialUI();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -199,7 +188,7 @@ public class MakeRegistrationFormController {
         btnAddReservation.setDisable(!(cmbRoomTypeID.getSelectionModel().getSelectedItem() != null && cmbRoomTypeID.getSelectionModel().getSelectedItem() != null));
     }
 
-    private void initialUI() {
+    private void initialUI() throws Exception {
         ResID = generateNewResId();
         lblRegID.setText("Res ID :" + ResID);
         btnAddReservation.setDisable(true);
@@ -215,23 +204,37 @@ public class MakeRegistrationFormController {
         txtStatus.setFocusTraversable(false);
         txtStatus.setEditable(false);
         txtStatus.setOnAction(event -> btnAddReservation.fire());
-
-/*
-        ReservationDTO dto = new ReservationDTO();
-        dto.setNonACRoomCount(beginNonACRoomCount);
-        dto.setNonACFoodRoomCount(beginNonACFoodRoomCount);
-        dto.setACRoomCount(beginACRoomCount);
-        dto.setACFoodRoomCount(beginACFoodRoomCount);
-
-        lblNonACRoomCount.setText(String.valueOf(dto.getNonACRoomCount()));
-        lblNonACFoodRoomCount.setText(String.valueOf(dto.getNonACFoodRoomCount()));
-        lblACRoomCount.setText(String.valueOf(dto.getACRoomCount()));
-        lblACFoodRoomCount.setText(String.valueOf(dto.getACFoodRoomCount()));*/
+        setAvailableRoomCount();
 
     }
 
-    private String generateNewResId() {
-        return "R00-001";
+    private void setAvailableRoomCount() {
+        //--------------set available room counts ------------------------------------
+        try {
+            List<RoomDTO> allRooms = reservationBO.getAllRooms();
+            for (RoomDTO allRoom : allRooms) {
+                String room_type_id = allRoom.getRoom_type_id();
+                if (room_type_id.equals(lblNonACRoom.getText())){
+                    lblNonACRoomCount.setText(String.valueOf(allRoom.getAvailableRoomQty()));
+                }
+                if (room_type_id.equals(lblNonACFoodRoom.getText())){
+                    lblNonACFoodRoomCount.setText(String.valueOf(allRoom.getAvailableRoomQty()));
+                }
+                if (room_type_id.equals(lblACRoom.getText())){
+                    lblACRoomCount.setText(String.valueOf(allRoom.getAvailableRoomQty()));
+                }
+                if (room_type_id.equals(lblACFoodRoom.getText())){
+                    lblACFoodRoomCount.setText(String.valueOf(allRoom.getAvailableRoomQty()));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String generateNewResId() throws Exception {
+        return reservationBO.generateNewReservationId();
     }
 
     public void txtSetStatusOnAction(ActionEvent actionEvent) {
@@ -246,7 +249,7 @@ public class MakeRegistrationFormController {
         btnAddReservation.setDisable(false);
     }
 
-    public void btnAddReservationOnAction(ActionEvent actionEvent) {
+    public void btnAddReservationOnAction(ActionEvent actionEvent) throws Exception {
         String studentId = cmbStudentID.getSelectionModel().getSelectedItem();
         String roomId = cmbRoomTypeID.getSelectionModel().getSelectedItem();
         String status = txtStatus.getText();
@@ -294,13 +297,14 @@ public class MakeRegistrationFormController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         cancel();
     }
 
 
-    private void cancel() {
-        // ResID = generateNewOrderId();
-        lblRegID.setText("Reg ID :" + ResID);
+    private void cancel() throws Exception {
+        ResID = generateNewResId();
+        lblRegID.setText("Res ID :" + ResID);
         cmbStudentID.getSelectionModel().clearSelection();
         cmbRoomTypeID.getSelectionModel().clearSelection();
         tblReservation.getItems().clear();
@@ -308,7 +312,7 @@ public class MakeRegistrationFormController {
         txtStatus.clear();
     }
 
-    public void btnCancelOnAction(ActionEvent actionEvent) {
+    public void btnCancelOnAction(ActionEvent actionEvent) throws Exception {
        cancel();
     }
 

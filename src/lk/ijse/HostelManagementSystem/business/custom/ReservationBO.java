@@ -22,4 +22,6 @@ public interface ReservationBO extends SuperBO {
      List<RoomDTO> getAllRooms() throws Exception;
 
      List<ReservationDTO> getAllReservations() throws Exception;
+
+     String generateNewReservationId() throws Exception;
 }

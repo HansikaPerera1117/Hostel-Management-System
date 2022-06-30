@@ -18,7 +18,7 @@
       <AnchorPane layoutX="490.0" layoutY="96.0" opacity="0.09" prefHeight="202.0" prefWidth="219.0" style="-fx-background-color: #4f0000;" />
       <AnchorPane layoutX="756.0" layoutY="96.0" opacity="0.09" prefHeight="202.0" prefWidth="219.0" style="-fx-background-color: #4f0000;" />
       <AnchorPane layoutX="1020.0" layoutY="96.0" opacity="0.09" prefHeight="202.0" prefWidth="219.0" style="-fx-background-color: #4f0000;" />
-      <Label layoutX="105.0" layoutY="23.0" text="Make Registration" textFill="#4f0000">
+      <Label layoutX="105.0" layoutY="23.0" text="Make Reservation" textFill="#4f0000">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -144,7 +144,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblRegID" layoutX="40.0" layoutY="314.0" text="Reg ID :R00-001">
+      <Label fx:id="lblRegID" layoutX="40.0" layoutY="314.0" text="Res ID :R00-001">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
