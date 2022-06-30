@@ -231,7 +231,7 @@ public class MakeRegistrationFormController {
     }
 
     private String generateNewResId() {
-        return "R00-004";
+        return "R00-001";
     }
 
     public void txtSetStatusOnAction(ActionEvent actionEvent) {

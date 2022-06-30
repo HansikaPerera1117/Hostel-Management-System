@@ -71,6 +71,7 @@ public class SearchRegistrationFormController {
 
     private String selectedRegId = null;
     private String updateStatus = null;
+    private String deletedRes_id = null;
 
 
     private final SearchRegistrationBO searchRegistrationBO = (SearchRegistrationBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.SEARCHREGISTRATION);
@@ -117,6 +118,8 @@ public class SearchRegistrationFormController {
                 e.printStackTrace();
             }
         });
+
+        //-------------validation--------------------------------------------
 
         loadDateAndTime();
         initialUI();
@@ -355,14 +358,32 @@ public class SearchRegistrationFormController {
         txtKeyMoney.clear();
         txtStatus.clear();
         tblSearchReservation.getItems().clear();
-        loadAllResIds();
     }
 
     public void btnCancelOnAction(ActionEvent actionEvent) throws Exception {
         cancelSearching();
     }
 
-    public void btnRemoveReservationOnAction(ActionEvent actionEvent) {
+    public void btnRemoveReservationOnAction(ActionEvent actionEvent) throws Exception {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure?", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> buttonType = alert.showAndWait();
+
+        if (buttonType.get().equals(ButtonType.YES)) {
+
+            try {
+                if (searchRegistrationBO.deleteReservation(selectedRegId)) {
+                    new Alert(Alert.AlertType.INFORMATION, "Reservation has been removed successfully").show();
+                    cancelSearching();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Try again!! Reservation has not been removed successfully").show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            cancelSearching();
+        }
+
     }
 
     public void textFields_Key_Released(KeyEvent keyEvent) {
@@ -390,7 +411,6 @@ public class SearchRegistrationFormController {
         );
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
-
     }
 
 

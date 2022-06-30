@@ -20,11 +20,11 @@ public class Reservation implements SuperEntity{
     @Column(nullable = false)
     private String status;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "room_type_id")
     private  Room room;
 

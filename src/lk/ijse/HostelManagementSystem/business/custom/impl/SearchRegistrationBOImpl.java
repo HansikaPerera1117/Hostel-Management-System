@@ -27,6 +27,13 @@ public class SearchRegistrationBOImpl implements SearchRegistrationBO {
     }
 
     @Override
+    public boolean deleteReservation(String id) throws Exception {
+        //---------------available room qty ekata add wenna oneee--------------------
+        return reservationDAO.delete(id);
+
+    }
+
+    @Override
     public List<StudentDTO> getAllStudents() throws Exception {
         List<Student> all = studentDAO.findAll();
         List<StudentDTO>studentList = new ArrayList<>();
