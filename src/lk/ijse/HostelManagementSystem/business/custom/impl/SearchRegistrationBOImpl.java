@@ -28,7 +28,21 @@ public class SearchRegistrationBOImpl implements SearchRegistrationBO {
 
     @Override
     public boolean deleteReservation(String id) throws Exception {
-        //---------------available room qty ekata add wenna oneee--------------------
+
+        //-------search and update availableRoomQty-------------------
+
+        List<ReservationDTO> DeletedReservationDetails = searchReservationDetails(id);
+        for (ReservationDTO dto : DeletedReservationDetails) {
+            List<RoomDTO> room = searchRoomDetails(dto.getRoom().getRoom_type_id());
+            for (RoomDTO roomDTO : room) {
+                roomDTO.setAvailableRoomQty(roomDTO.getAvailableRoomQty()+1);
+
+                //-------------------update Room----------------------------
+                roomDAO.update(new Room(roomDTO.getRoom_type_id(),roomDTO.getType(),roomDTO.getKey_money(),roomDTO.getQty(),roomDTO.getAvailableRoomQty()));
+
+            }
+        }
+
         return reservationDAO.delete(id);
 
     }
