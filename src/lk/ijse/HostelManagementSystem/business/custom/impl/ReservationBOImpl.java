@@ -23,6 +23,17 @@ public class ReservationBOImpl implements ReservationBO {
 
     @Override
     public boolean addReservation(ReservationDTO reservationDTO) throws Exception {
+        //---------------------------------search and update available room qty-------------------------------
+        String room_type_id = reservationDTO.getRoom().getRoom_type_id();
+        List<RoomDTO> roomDTOList = searchRoom(room_type_id);
+        for (RoomDTO dto : roomDTOList) {
+            dto.setAvailableRoomQty(dto.getAvailableRoomQty()-1);
+
+            //-------------------update Room----------------------------
+            roomDAO.update(new Room(dto.getRoom_type_id(),dto.getType(),dto.getKey_money(),dto.getQty(),dto.getAvailableRoomQty()));
+
+        }
+
         return reservationDAO.add(new Reservation(reservationDTO.getRes_id(),reservationDTO.getDate(),reservationDTO.getStatus(),reservationDTO.getStudent(),reservationDTO.getRoom()));
     }
 

@@ -20,10 +20,5 @@ public class ReservationDTO {
     private Room room;
     private String status;
 
-    /*private int ACRoomCount ;
-    private int ACFoodRoomCount ;
-    private int NonACRoomCount ;
-    private int NonACFoodRoomCount ;*/
-
 
 }

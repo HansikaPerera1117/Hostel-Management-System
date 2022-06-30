@@ -280,6 +280,7 @@ public class MakeRegistrationFormController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        setAvailableRoomCount();
         loadAllReservations();
         cancel();
 
