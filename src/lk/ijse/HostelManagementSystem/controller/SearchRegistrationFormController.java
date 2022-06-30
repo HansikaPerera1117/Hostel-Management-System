@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -27,6 +28,7 @@ import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.dto.StudentDTO;
 import lk.ijse.HostelManagementSystem.entity.Room;
 import lk.ijse.HostelManagementSystem.entity.Student;
+import lk.ijse.HostelManagementSystem.validation.ValidationUtil;
 import lk.ijse.HostelManagementSystem.view.tm.ReservationTM;
 import org.controlsfx.control.Notifications;
 
@@ -37,10 +39,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.regex.Pattern;
 
 public class SearchRegistrationFormController {
     public AnchorPane searchRegistrationContext;
@@ -73,7 +73,7 @@ public class SearchRegistrationFormController {
     private String updateStatus = null;
     private String deletedRes_id = null;
 
-
+    LinkedHashMap<TextField, Pattern> map = new LinkedHashMap<>();
     private final SearchRegistrationBO searchRegistrationBO = (SearchRegistrationBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.SEARCHREGISTRATION);
 
 
@@ -120,6 +120,10 @@ public class SearchRegistrationFormController {
         });
 
         //-------------validation--------------------------------------------
+
+        Pattern statusPattern = Pattern.compile("^(paid|[1-9][0-9]*(.[0-9]{1,2})?( is payable))$");
+        map.put(txtStatus,statusPattern);
+
 
         loadDateAndTime();
         initialUI();
@@ -387,6 +391,16 @@ public class SearchRegistrationFormController {
     }
 
     public void textFields_Key_Released(KeyEvent keyEvent) {
+        ValidationUtil.validate(map,btnUpdate);
+
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            Object response =  ValidationUtil.validate(map,btnUpdate);;
+
+            if (response instanceof TextField) {
+                TextField textField = (TextField) response;
+                textField.requestFocus();
+            }
+        }
     }
 
     public void backToDashBoardOnAction(MouseEvent event) throws IOException {
