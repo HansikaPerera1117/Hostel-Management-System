@@ -91,4 +91,14 @@ public class ReservationBOImpl implements ReservationBO {
        return reservationDAO.generateNewReservationId();
     }
 
+    @Override
+    public List<ReservationDTO> remainKeyMoneyStudents() throws Exception {
+        List<Reservation> reservationList = reservationDAO.remainKeyMoneyStudents();
+        List<ReservationDTO>reservationDTOS = new ArrayList<>();
+        for (Reservation reservation:reservationList) {
+            reservationDTOS.add(new ReservationDTO(reservation.getRes_id(),reservation.getDate(),reservation.getStudent(),reservation.getRoom(),reservation.getStatus()));
+        }
+            return reservationDTOS;
+    }
+
 }

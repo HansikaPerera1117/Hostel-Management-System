@@ -315,7 +315,7 @@ public class SearchRegistrationFormController {
             if (buttonType.get().equals(ButtonType.YES)) {
 
                 ObservableList<ReservationTM> items = tblSearchReservation.getItems();
-                boolean b= false;
+
                 for (ReservationTM reservationTM: items) {
                     List<StudentDTO> studentDTOList = searchRegistrationBO.searchStudentDetails(reservationTM.getStudent_id());
                     for (StudentDTO dto : studentDTOList) {
@@ -362,6 +362,8 @@ public class SearchRegistrationFormController {
         txtKeyMoney.clear();
         txtStatus.clear();
         tblSearchReservation.getItems().clear();
+        cmbRegID.getItems().clear();
+        loadAllResIds();
     }
 
     public void btnCancelOnAction(ActionEvent actionEvent) throws Exception {

@@ -140,4 +140,17 @@ public class ReservationDAOImpl implements ReservationDAO {
 
         return list.size()>0? String.format("R00-%03d", (Integer.parseInt(list.get(0).replace("R00-", "")) + 1)) : "R00-001";
     }
+
+    @Override
+    public List<Reservation> remainKeyMoneyStudents() throws Exception {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "FROM Reservation WHERE status LIKE '%is payable'";
+        List<Reservation> remainKeyMoneyStudentsList = session.createQuery(hql).list();
+
+        transaction.commit();
+        session.close();
+        return remainKeyMoneyStudentsList;
+    }
 }

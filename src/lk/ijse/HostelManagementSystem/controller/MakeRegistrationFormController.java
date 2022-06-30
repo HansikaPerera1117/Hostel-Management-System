@@ -30,6 +30,7 @@ import lk.ijse.HostelManagementSystem.entity.Student;
 import lk.ijse.HostelManagementSystem.view.tm.ReservationTM;
 import org.controlsfx.control.Notifications;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -94,7 +95,7 @@ public class MakeRegistrationFormController {
         try {
             loadAllStudentIds();
             loadAllRoomIds();
-           loadAllReservations();
+            loadAllReservations();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -208,6 +209,10 @@ public class MakeRegistrationFormController {
 
     }
 
+    private String generateNewResId() throws Exception {
+        return reservationBO.generateNewReservationId();
+    }
+
     private void setAvailableRoomCount() {
         //--------------set available room counts ------------------------------------
         try {
@@ -231,10 +236,6 @@ public class MakeRegistrationFormController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private String generateNewResId() throws Exception {
-        return reservationBO.generateNewReservationId();
     }
 
     public void txtSetStatusOnAction(ActionEvent actionEvent) {
@@ -264,30 +265,12 @@ public class MakeRegistrationFormController {
                     Room room = new Room(dto1.getRoom_type_id(),dto1.getType(),dto1.getKey_money(),dto1.getQty(),dto1.getAvailableRoomQty());
 
                     if (reservationBO.addReservation(new ReservationDTO(ResID,LocalDate.now(),student,room,status))){
+
+                        tblReservation.getItems().add(new ReservationTM(ResID,LocalDate.now(),studentId,roomId,status));
+
                         Notifications notifications = Notifications.create().title("Add Reservation Successful !").text("Reservation has been added successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
                         notifications.darkStyle();
                         notifications.show();
-
-                       /* ReservationDTO reservationDTO = new ReservationDTO();
-
-                        //-------------------update available room count--------------------------------
-
-                        if (lblNonACRoom.getText().equals(roomId)) {
-                            int i = reservationDTO.getNonACRoomCount();
-                            int a = (i - 1);
-                            reservationDTO.setNonACRoomCount(a);
-                            lblNonACRoomCount.setText(String.valueOf(a));
-                        } else if (lblNonACFoodRoom.getText().equals(roomId)) {
-                            reservationDTO.setNonACFoodRoomCount(reservationDTO.getNonACFoodRoomCount()-1);
-                            lblNonACFoodRoomCount.setText(String.valueOf(reservationDTO.getNonACFoodRoomCount()));
-                        } else if (lblACRoom.getText().equals(roomId)) {
-                            reservationDTO.setACRoomCount(reservationDTO.getACRoomCount()-1);
-                            lblACRoomCount.setText(String.valueOf(reservationDTO.getACRoomCount()));
-                        } else if (lblACFoodRoom.getText().equals(roomId)) {
-                            reservationDTO.setACFoodRoomCount(reservationDTO.getACFoodRoomCount()-1);
-                            lblACFoodRoomCount.setText(String.valueOf(reservationDTO.getACFoodRoomCount()));
-                        }
-                        System.out.println(reservationDTO.getNonACRoomCount());*/
 
                     }else {
                         new Alert(Alert.AlertType.ERROR, "Reservation has not been added successfully").show();
@@ -297,8 +280,9 @@ public class MakeRegistrationFormController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        loadAllReservations();
         cancel();
+
     }
 
 

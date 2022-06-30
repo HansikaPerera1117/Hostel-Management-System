@@ -14,8 +14,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.HostelManagementSystem.business.BOFactory;
-import lk.ijse.HostelManagementSystem.business.custom.RemainKeyMoneyStudentsBO;
-import lk.ijse.HostelManagementSystem.dto.CustomDTO;
+import lk.ijse.HostelManagementSystem.business.custom.ReservationBO;
+import lk.ijse.HostelManagementSystem.dto.ReservationDTO;
 import lk.ijse.HostelManagementSystem.view.tm.CustomTM;
 
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class RemainKeyMoneyStudentFormController {
     public TableView<CustomTM> tblRemainingKeyMoney;
     public TableColumn colId;
     public TableColumn colName;
-    public TableColumn colAddress;
+    public TableColumn colContactNO;
     public TableColumn colRegNo;
     public TableColumn colRoomTypeID;
     public TableColumn colDate;
@@ -37,15 +37,16 @@ public class RemainKeyMoneyStudentFormController {
     public Label lblDate;
     public Label lblTime;
 
-    private final RemainKeyMoneyStudentsBO remainKeyMoneyStudentsBO = (RemainKeyMoneyStudentsBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.REMAINKEYMONEYSTUDENT);
+    private final ReservationBO reservationBO = (ReservationBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.RESERVATION);
 
 
     public void initialize(){
 
         colId.setCellValueFactory(new PropertyValueFactory<>("student_id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colContactNO.setCellValueFactory(new PropertyValueFactory<>("contact_no"));
         colRegNo.setCellValueFactory(new PropertyValueFactory<>("res_id"));
+        colRoomTypeID.setCellValueFactory(new PropertyValueFactory<>("room_type_id"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colRemainingMoney.setCellValueFactory(new PropertyValueFactory<>("status"));
 
@@ -59,9 +60,9 @@ public class RemainKeyMoneyStudentFormController {
     }
 
     private void loadAllRemainKeyMonetStudents() throws Exception {
-        List<CustomDTO> allRemainingKeyMoneyStudents = remainKeyMoneyStudentsBO.getAllRemainingKeyMoneyStudents();
-        for (CustomDTO dto:allRemainingKeyMoneyStudents) {
-            tblRemainingKeyMoney.getItems().add(new CustomTM(dto.getStudent_id(),dto.getName(),dto.getContact_no(),dto.getRes_id(),dto.getRoom_type_id(),dto.getDate(),dto.getStatus()));
+        List<ReservationDTO> reservationDTOS = reservationBO.remainKeyMoneyStudents();
+        for (ReservationDTO reservationDTO : reservationDTOS) {
+            tblRemainingKeyMoney.getItems().add(new CustomTM(reservationDTO.getStudent().getStudent_id(),reservationDTO.getStudent().getName(),reservationDTO.getStudent().getContact_no(),reservationDTO.getRes_id(),reservationDTO.getRoom().getRoom_type_id(),reservationDTO.getDate(),reservationDTO.getStatus()));
         }
 
     }

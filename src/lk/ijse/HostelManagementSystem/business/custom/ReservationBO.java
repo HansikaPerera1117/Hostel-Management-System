@@ -4,6 +4,7 @@ import lk.ijse.HostelManagementSystem.business.SuperBO;
 import lk.ijse.HostelManagementSystem.dto.ReservationDTO;
 import lk.ijse.HostelManagementSystem.dto.RoomDTO;
 import lk.ijse.HostelManagementSystem.dto.StudentDTO;
+
 import java.util.List;
 
 public interface ReservationBO extends SuperBO {
@@ -24,4 +25,6 @@ public interface ReservationBO extends SuperBO {
      List<ReservationDTO> getAllReservations() throws Exception;
 
      String generateNewReservationId() throws Exception;
+
+     List<ReservationDTO> remainKeyMoneyStudents()throws Exception;
 }

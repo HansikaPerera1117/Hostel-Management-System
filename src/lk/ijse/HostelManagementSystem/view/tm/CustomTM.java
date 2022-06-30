@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -16,7 +17,7 @@ public class CustomTM {
     private String name;
     private String address;
     private String contact_no;
-    private Date dob;
+    private LocalDate dob;
     private String gender;
 
     private String room_type_id;
@@ -25,12 +26,13 @@ public class CustomTM {
     private int qty;
 
     private String res_id;
-    private Date date;
+    private LocalDate date;
     //private String student_id;
     // private String room_type_id;
     private String status;
 
-    public CustomTM(String student_id, String name, String contact_no, String res_id, String room_type_id, Date date, String status) {
+
+    public CustomTM(String student_id, String name, String contact_no, String res_id, String room_type_id, LocalDate date, String status) {
         this.student_id = student_id;
         this.name = name;
         this.contact_no = contact_no;
