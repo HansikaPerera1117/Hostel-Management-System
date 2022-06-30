@@ -55,6 +55,8 @@ public class StudentFormController {
     public Label lblTime;
     public Label lblDate;
 
+    private int attempts = 0;
+
     LinkedHashMap<TextField, Pattern> map = new LinkedHashMap<>();
 
     private final StudentBO studentBO = (StudentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.STUDENT);
@@ -163,6 +165,7 @@ public class StudentFormController {
                       tblStudent.getItems().remove(tblStudent.getSelectionModel().getSelectedItem());
                       tblStudent.getSelectionModel().clearSelection();
                       initialUI();
+                      attempts--;
 
                       Notifications notifications = Notifications.create().title("Successful !").text("Student has been deleted successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
                       notifications.darkStyle();
@@ -202,19 +205,22 @@ public class StudentFormController {
     public void btnSaveStudentOnAction(ActionEvent actionEvent) {
        if (btnSave.getText().equalsIgnoreCase("Save")) {
            //-----------------------Save Student-----------------------------
-           try {
-                if (existsStudent(txtStudentId.getText())) {
-                    new Alert(Alert.AlertType.ERROR, txtStudentId.getText() + " already exists").show();
-                }else {
-                    if (studentBO.addStudent(new StudentDTO(txtStudentId.getText(), txtStudentName.getText(), txtAddress.getText(), txtContactNo.getText(), dtDOB.getValue(), String.valueOf(cmbGender.getValue())))) {
-                        Notifications notifications = Notifications.create().title("Successful !").text("Student has been saved successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
-                        notifications.darkStyle();
-                        notifications.show();
-                    }
-                }
-           } catch (Exception e) {
-               new Alert(Alert.AlertType.ERROR, "Failed to save the student " + e.getMessage()).show();
-               e.printStackTrace();
+           attempts++;
+           if (attempts <= 125) {
+               try {
+                   if (existsStudent(txtStudentId.getText())) {
+                       new Alert(Alert.AlertType.ERROR, txtStudentId.getText() + " already exists").show();
+                   } else {
+                       if (studentBO.addStudent(new StudentDTO(txtStudentId.getText(), txtStudentName.getText(), txtAddress.getText(), txtContactNo.getText(), dtDOB.getValue(), String.valueOf(cmbGender.getValue())))) {
+                           Notifications notifications = Notifications.create().title("Successful !").text("Student has been saved successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
+                           notifications.darkStyle();
+                           notifications.show();
+                       }
+                   }
+               } catch (Exception e) {
+                   new Alert(Alert.AlertType.ERROR, "Failed to save the student " + e.getMessage()).show();
+                   e.printStackTrace();
+               }
            }
        }else{
            //---------------Update Student-------------------------------------------

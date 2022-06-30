@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
@@ -19,6 +20,11 @@
          </image>
       </ImageView>
       <JFXTextField fx:id="txtUserName" focusColor="#4f0000" layoutX="473.0" layoutY="239.0" prefHeight="50.0" prefWidth="336.0" promptText="User Name" unFocusColor="#4f0000">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtPW" focusColor="#4f0000" layoutX="474.0" layoutY="316.0" prefHeight="50.0" prefWidth="336.0" unFocusColor="#4f0000">
          <font>
             <Font size="18.0" />
          </font>
@@ -54,5 +60,6 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
+      <JFXCheckBox fx:id="chkPasswordShowOrHide" checkedColor="BLACK" layoutX="475.0" layoutY="372.0" onMouseClicked="#chkPasswordShowOrHideMouseClickedOnAction" text="Show Password" />
    </children>
 </AnchorPane>

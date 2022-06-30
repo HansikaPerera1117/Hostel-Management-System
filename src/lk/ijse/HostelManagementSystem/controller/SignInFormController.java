@@ -1,8 +1,10 @@
 package lk.ijse.HostelManagementSystem.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -30,13 +32,17 @@ public class SignInFormController {
     public JFXTextField txtFullName;
     public JFXTextField txtUserName;
     public JFXPasswordField pwdPassword;
+    public JFXTextField txtPW;
+    public JFXCheckBox chkPasswordShowOrHide;
     public JFXButton btnRegister;
     public AnchorPane registerContext;
 
     private final UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
+
     LinkedHashMap<TextField, Pattern> map = new LinkedHashMap<>();
 
     public void initialize(){
+        txtPW.setVisible(false);
         initialUI();
 
         //-----------------validation--------------------------
@@ -79,6 +85,24 @@ public class SignInFormController {
         }
     }
 
+    public void chkPasswordShowOrHideMouseClickedOnAction(MouseEvent event) {
+        String passwordText = pwdPassword.getText();
+        chkPasswordShowOrHide.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) ->{
+            if(chkPasswordShowOrHide.isSelected()){
+                chkPasswordShowOrHide.setText("Hide Password");
+                txtPW.setText(passwordText);
+                txtPW.setVisible(true);
+                pwdPassword.setVisible(false);
+                return;
+            }else {
+                chkPasswordShowOrHide.setText("Show Password");
+                pwdPassword.setText(passwordText);
+                pwdPassword.setVisible(true);
+                txtPW.setVisible(false);
+            }
+        } );
+    }
+
     private boolean existsEmail(String email) throws Exception {
         return userBO.emailExist(email);
     }
@@ -106,4 +130,5 @@ public class SignInFormController {
             }
         }
     }
+
 }

@@ -1,7 +1,9 @@
 package lk.ijse.HostelManagementSystem.controller;
 
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -18,17 +20,25 @@ import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Observable;
 
 public class LogInFormController {
 
     public AnchorPane logInContext;
     public JFXTextField txtUserName;
     public JFXPasswordField pwdPassword;
+    public JFXCheckBox chkPasswordShowOrHide;
+    public JFXTextField txtPW;
     private int attempts = 0;
     public String userName;
     private String passWord;
 
     private final UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
+
+    public void initialize(){
+        txtPW.setVisible(false);
+
+    }
 
     public void btnLogInOnAction(ActionEvent actionEvent) throws IOException {
        try {
@@ -63,6 +73,24 @@ public class LogInFormController {
             pwdPassword.setEditable(false);
         }
 
+    }
+
+    public void chkPasswordShowOrHideMouseClickedOnAction(MouseEvent event) {
+        String passwordText = pwdPassword.getText();
+        chkPasswordShowOrHide.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue, Boolean oldValue,Boolean newValue) ->{
+            if(chkPasswordShowOrHide.isSelected()){
+                chkPasswordShowOrHide.setText("Hide Password");
+                txtPW.setText(passwordText);
+                txtPW.setVisible(true);
+                pwdPassword.setVisible(false);
+                return;
+            }else {
+                chkPasswordShowOrHide.setText("Show Password");
+                pwdPassword.setText(passwordText);
+                pwdPassword.setVisible(true);
+                txtPW.setVisible(false);
+            }
+        } );
     }
 
     public void openRegisterOnAction(MouseEvent event) throws IOException {

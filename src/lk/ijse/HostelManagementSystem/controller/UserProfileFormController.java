@@ -1,11 +1,13 @@
 package lk.ijse.HostelManagementSystem.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -44,13 +46,20 @@ public class UserProfileFormController {
     public JFXTextField txtUserName;
     public JFXTextField txtEmail;
     public JFXPasswordField pwdNewPassword;
+    public JFXTextField txtPW;
+    public JFXTextField txtNewPW;
+    public JFXCheckBox chkPasswordShowOrHide;
+    public JFXCheckBox chkNewPasswordShowOrHide;
     public JFXTextField txtChangePasswordUserName;
     public JFXButton btnResetPassword;
 
     private final UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
+
     LinkedHashMap<TextField, Pattern> map = new LinkedHashMap<>();
 
     public void initialize(){
+        txtPW.setVisible(false);
+        txtNewPW.setVisible(false);
         //------------validation--------------------
         Pattern passwordPattern = Pattern.compile("^[A-z0-9]{4,8}$");
         map.put(pwdNewPassword,passwordPattern);
@@ -92,6 +101,42 @@ public class UserProfileFormController {
             new Alert(Alert.AlertType.ERROR, "Failed to reset the password " + e.getMessage()).show();
             e.printStackTrace();
         }
+    }
+
+    public void chkPasswordShowOrHideMouseClickedOnAction(MouseEvent event) {
+        String passwordText = pwdPassword.getText();
+        chkPasswordShowOrHide.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) ->{
+            if(chkPasswordShowOrHide.isSelected()){
+                chkPasswordShowOrHide.setText("Hide Password");
+                txtPW.setText(passwordText);
+                txtPW.setVisible(true);
+                pwdPassword.setVisible(false);
+                return;
+            }else {
+                chkPasswordShowOrHide.setText("Show Password");
+                pwdPassword.setText(passwordText);
+                pwdPassword.setVisible(true);
+                txtPW.setVisible(false);
+            }
+        } );
+    }
+
+    public void chkNewPasswordShowOrHideMouseClickedOnAction(MouseEvent event) {
+        String NewPasswordText = pwdNewPassword.getText();
+        chkNewPasswordShowOrHide.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) ->{
+            if(chkNewPasswordShowOrHide.isSelected()){
+                chkNewPasswordShowOrHide.setText("Hide Password");
+                txtNewPW.setText(NewPasswordText);
+                txtNewPW.setVisible(true);
+                pwdNewPassword.setVisible(false);
+                return;
+            }else {
+                chkNewPasswordShowOrHide.setText("Show Password");
+                pwdNewPassword.setText(NewPasswordText);
+                pwdNewPassword.setVisible(true);
+                txtNewPW.setVisible(false);
+            }
+        } );
     }
 
     public void btnDeleteUserOnAction(ActionEvent actionEvent) {
@@ -158,4 +203,6 @@ public class UserProfileFormController {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
     }
+
+
 }
