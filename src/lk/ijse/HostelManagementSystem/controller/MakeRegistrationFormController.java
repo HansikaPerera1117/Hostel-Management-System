@@ -258,7 +258,7 @@ public class MakeRegistrationFormController {
 
                 List<RoomDTO> roomDTOList = reservationBO.searchRoom(roomId);
                 for (RoomDTO dto1 :roomDTOList) {
-                    Room room = new Room(dto1.getRoom_type_id(),dto1.getType(),dto1.getKey_money(),dto1.getQty());
+                    Room room = new Room(dto1.getRoom_type_id(),dto1.getType(),dto1.getKey_money(),dto1.getQty(),dto1.getAvailableRoomQty());
 
                     if (reservationBO.addReservation(new ReservationDTO(ResID,LocalDate.now(),student,room,status))){
                         Notifications notifications = Notifications.create().title("Add Reservation Successful !").text("Reservation has been added successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);

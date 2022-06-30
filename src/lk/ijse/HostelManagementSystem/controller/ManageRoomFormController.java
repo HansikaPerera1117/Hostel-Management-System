@@ -39,11 +39,13 @@ public class ManageRoomFormController {
     public JFXTextField txtKeyMoney;
     public JFXTextField txtRoomType;
     public JFXTextField txtQty;
+    public JFXTextField txtAvailableQty;
     public TableView<RoomTM> tblRoom;
     public TableColumn colId;
     public TableColumn colType;
     public TableColumn colKeyMoney;
     public TableColumn colQty;
+    public TableColumn colAvailableQty;
     public TableColumn colDelete;
     public JFXButton btnSave;
     public JFXButton btnAddNewRoom;
@@ -51,6 +53,8 @@ public class ManageRoomFormController {
     public Label lblTime;
 
     private final RoomBO roomBO = (RoomBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ROOM);
+
+
     LinkedHashMap<TextField, Pattern> map = new LinkedHashMap<>();
 
     public void initialize(){
@@ -59,6 +63,7 @@ public class ManageRoomFormController {
         colType.setCellValueFactory(new PropertyValueFactory<>("type"));
         colKeyMoney.setCellValueFactory(new PropertyValueFactory<>("key_money"));
         colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colAvailableQty.setCellValueFactory(new PropertyValueFactory<>("availableRoomQty"));
         colDelete.setCellValueFactory(new PropertyValueFactory<>("btn"));
 
         tblRoom.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -71,11 +76,13 @@ public class ManageRoomFormController {
                 txtRoomType.setText(newValue.getType());
                 txtKeyMoney.setText(newValue.getKey_money());
                 txtQty.setText(String.valueOf(newValue.getQty()));
+                txtAvailableQty.setText(String.valueOf(newValue.getAvailableRoomQty()));
 
                 txtRoomTypeID.setDisable(false);
                 txtRoomType.setDisable(false);
                 txtKeyMoney.setDisable(false);
                 txtQty.setDisable(false);
+                txtAvailableQty.setDisable(false);
             }
         });
 
@@ -87,11 +94,13 @@ public class ManageRoomFormController {
         Pattern roomTypePattern = Pattern.compile("^(Non-AC|Non-AC/Food|AC|AC/Food)$");
         Pattern keyMoneyPattern = Pattern.compile("^[1-9][0-9]*(.[0-9]{1,2})?$");
         Pattern qtyPattern = Pattern.compile("^[1-9][0-9]{0,2}$");
+        Pattern availableQtyPattern = Pattern.compile("^[1-9][0-9]{0,2}$");
 
         map.put(txtRoomTypeID,roomTypeIdPattern);
         map.put(txtRoomType,roomTypePattern);
         map.put(txtKeyMoney,keyMoneyPattern);
         map.put(txtQty,qtyPattern);
+        map.put(txtAvailableQty,availableQtyPattern);
 
 
         try {
@@ -106,10 +115,12 @@ public class ManageRoomFormController {
         txtRoomType.clear();
         txtKeyMoney.clear();
         txtQty.clear();
+        txtAvailableQty.clear();
         txtRoomTypeID.setDisable(true);
         txtRoomType.setDisable(true);
         txtKeyMoney.setDisable(true);
         txtQty.setDisable(true);
+        txtAvailableQty.setDisable(true);
         btnSave.setDisable(true);
     }
 
@@ -119,7 +130,7 @@ public class ManageRoomFormController {
         List<RoomDTO> allRooms = roomBO.getAllRooms();
         for (RoomDTO dto:allRooms) {
             Button btn = new Button("Delete");
-            tblRoom.getItems().add(new RoomTM(dto.getRoom_type_id(),dto.getType(),dto.getKey_money(),dto.getQty(),btn));
+            tblRoom.getItems().add(new RoomTM(dto.getRoom_type_id(),dto.getType(),dto.getKey_money(),dto.getQty(),dto.getAvailableRoomQty(),btn));
 
             btn.setOnAction(e->{
             //------------------delete room--------------------------------
@@ -160,10 +171,12 @@ public class ManageRoomFormController {
         txtRoomType.setDisable(false);
         txtKeyMoney.setDisable(false);
         txtQty.setDisable(false);
+        txtAvailableQty.setDisable(false);
         txtRoomTypeID.clear();
         txtRoomType.clear();
         txtKeyMoney.clear();
         txtQty.clear();
+        txtAvailableQty.clear();
         txtRoomTypeID.requestFocus();
         btnSave.setDisable(false);
         btnSave.setText("Save");
@@ -182,7 +195,7 @@ public class ManageRoomFormController {
                     new Alert(Alert.AlertType.ERROR, txtRoomTypeID.getText() + " already exists").show();
                 }else {
 
-                    if (roomBO.addRoom(new RoomDTO(txtRoomTypeID.getText(), txtRoomType.getText(), txtKeyMoney.getText(), Integer.parseInt(txtQty.getText())))) {
+                    if (roomBO.addRoom(new RoomDTO(txtRoomTypeID.getText(),txtRoomType.getText(),txtKeyMoney.getText(),Integer.parseInt(txtQty.getText()),Integer.parseInt(txtAvailableQty.getText())))) {
                         Notifications notifications = Notifications.create().title("Successful !").text("Room has been saved successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
                         notifications.darkStyle();
                         notifications.show();
@@ -201,7 +214,7 @@ public class ManageRoomFormController {
                 if (!existsRoom(txtRoomTypeID.getText())){
                     new Alert(Alert.AlertType.ERROR, "There is no such room associated with the id " + txtRoomTypeID.getText() ).show();
                 }else {
-                    if (roomBO.updateRoom(new RoomDTO(txtRoomTypeID.getText(), txtRoomType.getText(), txtKeyMoney.getText(), Integer.parseInt(txtQty.getText())))) {
+                    if (roomBO.updateRoom(new RoomDTO(txtRoomTypeID.getText(), txtRoomType.getText(), txtKeyMoney.getText(), Integer.parseInt(txtQty.getText()),Integer.parseInt(txtAvailableQty.getText())))) {
                         Notifications notifications = Notifications.create().title("Successful !").text("Room has been updated successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
                         notifications.darkStyle();
                         notifications.show();
@@ -213,6 +226,11 @@ public class ManageRoomFormController {
                 e.printStackTrace();
             }
         }
+        txtRoomTypeID.clear();
+        txtRoomType.clear();
+        txtKeyMoney.clear();
+        txtQty.clear();
+        txtAvailableQty.clear();
 
         try {
             loadAllRooms();

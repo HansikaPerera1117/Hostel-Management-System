@@ -323,7 +323,7 @@ public class SearchRegistrationFormController {
 
                         List<RoomDTO> roomDTOList = searchRegistrationBO.searchRoomDetails(reservationTM.getRoom_type_id());
                         for (RoomDTO dto1 : roomDTOList) {
-                            Room room = new Room(dto1.getRoom_type_id(), dto1.getType(), dto1.getKey_money(), dto1.getQty());
+                            Room room = new Room(dto1.getRoom_type_id(), dto1.getType(), dto1.getKey_money(), dto1.getQty(),dto1.getAvailableRoomQty());
 
                             if(searchRegistrationBO.updateReservation(new ReservationDTO(selectedRegId, reservationTM.getDate(), student, room, updateStatus))){
                                 new Alert(Alert.AlertType.INFORMATION, "Reservation details has been updated successfully").show();

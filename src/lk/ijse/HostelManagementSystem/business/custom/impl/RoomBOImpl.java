@@ -18,19 +18,19 @@ public class RoomBOImpl implements RoomBO {
         List<Room> all = roomDAO.findAll();
         List<RoomDTO> allRooms = new ArrayList<>();
         for (Room room:all) {
-            allRooms.add(new RoomDTO(room.getRoom_type_id(),room.getType(),room.getKey_money(),room.getQty()));
+            allRooms.add(new RoomDTO(room.getRoom_type_id(),room.getType(),room.getKey_money(),room.getQty(),room.getAvailableRoomQty()));
         }
         return allRooms;
     }
 
     @Override
     public boolean addRoom(RoomDTO roomDTO) throws Exception {
-       return roomDAO.add(new Room(roomDTO.getRoom_type_id(),roomDTO.getType(),roomDTO.getKey_money(),roomDTO.getQty()));
+       return roomDAO.add(new Room(roomDTO.getRoom_type_id(),roomDTO.getType(),roomDTO.getKey_money(),roomDTO.getQty(),roomDTO.getAvailableRoomQty()));
     }
 
     @Override
     public boolean updateRoom(RoomDTO roomDTO) throws Exception {
-        return roomDAO.update(new Room(roomDTO.getRoom_type_id(),roomDTO.getType(),roomDTO.getKey_money(),roomDTO.getQty()));
+        return roomDAO.update(new Room(roomDTO.getRoom_type_id(),roomDTO.getType(),roomDTO.getKey_money(),roomDTO.getQty(),roomDTO.getAvailableRoomQty()));
     }
 
     @Override

@@ -14,5 +14,6 @@ public class RoomTM {
     private String type;
     private String key_money;
     private int qty;
+    private int availableRoomQty;
     private Button btn;
 }

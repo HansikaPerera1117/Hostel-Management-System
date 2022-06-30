@@ -48,7 +48,7 @@ public class SearchRegistrationBOImpl implements SearchRegistrationBO {
         List<Room> all = roomDAO.findAll();
         List<RoomDTO>roomDTOList = new ArrayList<>();
         for (Room room : all) {
-            roomDTOList.add(new RoomDTO(room.getRoom_type_id(),room.getType(),room.getKey_money(),room.getQty()));
+            roomDTOList.add(new RoomDTO(room.getRoom_type_id(),room.getType(),room.getKey_money(),room.getQty(),room.getAvailableRoomQty()));
         }
         return roomDTOList;
     }
@@ -98,7 +98,7 @@ public class SearchRegistrationBOImpl implements SearchRegistrationBO {
         List<Room> roomList = roomDAO.find(id);
         List<RoomDTO>detailList = new ArrayList<>();
         for (Room room : roomList) {
-            detailList.add(new RoomDTO(room.getRoom_type_id(),room.getType(),room.getKey_money(),room.getQty()));
+            detailList.add(new RoomDTO(room.getRoom_type_id(),room.getType(),room.getKey_money(),room.getQty(),room.getAvailableRoomQty()));
         }
         return detailList;
     }

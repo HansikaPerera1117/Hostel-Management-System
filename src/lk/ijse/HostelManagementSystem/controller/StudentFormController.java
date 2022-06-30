@@ -234,6 +234,12 @@ public class StudentFormController {
                e.printStackTrace();
            }
        }
+        txtStudentId.clear();
+        txtStudentName.clear();
+        txtAddress.clear();
+        txtContactNo.clear();
+        dtDOB.getEditor().clear();
+        cmbGender.getSelectionModel().clearSelection();
 
         try {
             loadAllStudents();

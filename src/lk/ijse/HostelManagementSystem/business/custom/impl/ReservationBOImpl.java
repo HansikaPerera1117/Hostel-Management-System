@@ -1,6 +1,5 @@
 package lk.ijse.HostelManagementSystem.business.custom.impl;
 
-import lk.ijse.HostelManagementSystem.business.BOFactory;
 import lk.ijse.HostelManagementSystem.business.custom.ReservationBO;
 import lk.ijse.HostelManagementSystem.dto.ReservationDTO;
 import lk.ijse.HostelManagementSystem.dto.RoomDTO;
@@ -42,7 +41,7 @@ public class ReservationBOImpl implements ReservationBO {
         List<Room> all = roomDAO.find(id);
         List<RoomDTO> roomDTOList = new ArrayList<>();
         for (Room room: all) {
-            roomDTOList.add(new RoomDTO(room.getRoom_type_id(),room.getType(),room.getKey_money(),room.getQty()));
+            roomDTOList.add(new RoomDTO(room.getRoom_type_id(),room.getType(),room.getKey_money(),room.getQty(),room.getAvailableRoomQty()));
         }
         return roomDTOList;
     }
@@ -72,7 +71,7 @@ public class ReservationBOImpl implements ReservationBO {
         List<Room> all = roomDAO.findAll();
         List<RoomDTO> roomList = new ArrayList<>();
         for (Room room : all) {
-            roomList.add(new RoomDTO(room.getRoom_type_id(), room.getType(), room.getKey_money(), room.getQty()));
+            roomList.add(new RoomDTO(room.getRoom_type_id(), room.getType(), room.getKey_money(), room.getQty(),room.getAvailableRoomQty()));
         }
         return roomList;
     }

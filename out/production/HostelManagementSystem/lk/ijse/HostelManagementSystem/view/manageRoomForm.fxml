@@ -34,33 +34,34 @@
          </font>
       </Label>
       <Separator layoutX="16.0" layoutY="84.0" prefHeight="3.0" prefWidth="715.0" />
-      <JFXTextField fx:id="txtRoomTypeID" focusColor="BLACK" labelFloat="true" layoutX="30.0" layoutY="117.0" onKeyReleased="#textFields_Key_Released" prefHeight="37.0" prefWidth="232.0" promptText="Room Type ID :">
+      <JFXTextField fx:id="txtRoomTypeID" focusColor="BLACK" labelFloat="true" layoutX="30.0" layoutY="117.0" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="216.0" promptText="Room Type ID :">
          <font>
             <Font size="17.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtKeyMoney" focusColor="BLACK" labelFloat="true" layoutX="30.0" layoutY="180.0" onKeyReleased="#textFields_Key_Released" prefHeight="37.0" prefWidth="288.0" promptText="Key Money :">
+      <JFXTextField fx:id="txtKeyMoney" focusColor="BLACK" labelFloat="true" layoutX="30.0" layoutY="180.0" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="240.0" promptText="Key Money :">
          <font>
             <Font size="17.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtRoomType" focusColor="BLACK" labelFloat="true" layoutX="292.0" layoutY="117.0" onKeyReleased="#textFields_Key_Released" prefHeight="37.0" prefWidth="288.0" promptText="Room Type :">
+      <JFXTextField fx:id="txtRoomType" focusColor="BLACK" labelFloat="true" layoutX="260.0" layoutY="117.0" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="349.0" promptText="Type :Non-AC | Non-AC/Food | AC | AC/Food">
          <font>
             <Font size="17.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtQty" focusColor="BLACK" labelFloat="true" layoutX="339.0" layoutY="180.0" onKeyReleased="#textFields_Key_Released" prefHeight="37.0" prefWidth="240.0" promptText="Qty">
+      <JFXTextField fx:id="txtQty" focusColor="BLACK" labelFloat="true" layoutX="294.0" layoutY="180.0" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="135.0" promptText="Qty">
          <font>
             <Font size="17.0" />
          </font>
       </JFXTextField>
       <TableView fx:id="tblRoom" layoutX="20.0" layoutY="252.0" prefHeight="328.0" prefWidth="707.0">
          <columns>
-            <TableColumn fx:id="colId" prefWidth="122.0" text="Room ID" />
-            <TableColumn fx:id="colType" prefWidth="235.0" text="Room Type" />
-            <TableColumn fx:id="colKeyMoney" prefWidth="142.0" text="Key Money" />
-            <TableColumn fx:id="colQty" prefWidth="103.0" text="Qty" />
-            <TableColumn fx:id="colDelete" prefWidth="102.0" text="Delete" />
+            <TableColumn fx:id="colId" prefWidth="113.0" text="Room ID" />
+            <TableColumn fx:id="colType" prefWidth="176.0" text="Room Type" />
+            <TableColumn fx:id="colKeyMoney" prefWidth="132.0" text="Key Money" />
+            <TableColumn fx:id="colQty" prefWidth="88.0" text="Qty" />
+            <TableColumn fx:id="colAvailableQty" prefWidth="100.0" text="AvailableQty" />
+            <TableColumn fx:id="colDelete" prefWidth="96.0" text="Delete" />
          </columns>
       </TableView>
       <JFXButton fx:id="btnSave" buttonType="RAISED" layoutX="627.0" layoutY="179.0" onAction="#btnSaveRoomOnAction" prefHeight="40.0" prefWidth="106.0" style="-fx-background-color: #18964d;" text="Save" textFill="WHITE">
@@ -73,5 +74,10 @@
             <Font size="17.0" />
          </font>
       </JFXButton>
+      <JFXTextField fx:id="txtAvailableQty" focusColor="BLACK" labelFloat="true" layoutX="454.0" layoutY="180.0" onKeyReleased="#textFields_Key_Released" prefHeight="38.0" prefWidth="150.0" promptText="Aailable Qty">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
    </children>
 </AnchorPane>
