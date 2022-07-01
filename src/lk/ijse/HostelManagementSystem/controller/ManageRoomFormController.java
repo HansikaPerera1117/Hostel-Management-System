@@ -54,7 +54,6 @@ public class ManageRoomFormController {
 
     private final RoomBO roomBO = (RoomBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ROOM);
 
-
     LinkedHashMap<TextField, Pattern> map = new LinkedHashMap<>();
 
     public void initialize(){

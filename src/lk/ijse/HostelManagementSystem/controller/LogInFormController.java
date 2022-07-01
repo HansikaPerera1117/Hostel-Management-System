@@ -37,7 +37,6 @@ public class LogInFormController {
 
     public void initialize(){
         txtPW.setVisible(false);
-
     }
 
     public void btnLogInOnAction(ActionEvent actionEvent) throws IOException {

@@ -14,6 +14,8 @@ public interface ReservationBO extends SuperBO {
 
      List<RoomDTO> searchRoom(String id) throws Exception;
 
+     List<ReservationDTO> searchReservation(String id) throws Exception;
+
      boolean checkStudentIsAvailable(String id) throws Exception;
 
      boolean checkRoomIsAvailable(String id) throws Exception;

@@ -58,6 +58,16 @@ public class ReservationBOImpl implements ReservationBO {
     }
 
     @Override
+    public List<ReservationDTO> searchReservation(String id) throws Exception {
+        List<Reservation> reservationList = reservationDAO.find(id);
+        List<ReservationDTO>reservationDTOS = new ArrayList<>();
+        for (Reservation reservation:reservationList) {
+            reservationDTOS.add(new ReservationDTO(reservation.getRes_id(),reservation.getDate(),reservation.getStudent(),reservation.getRoom(),reservation.getStatus()));
+        }
+        return reservationDTOS;
+    }
+
+    @Override
     public boolean checkStudentIsAvailable(String id) throws Exception {
         return studentDAO.exist(id);
     }

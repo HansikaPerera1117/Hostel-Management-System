@@ -303,7 +303,7 @@ public class SearchRegistrationFormController {
         txtStatus.clear();
     }
 
-    public void btnConfirmEditsOnAction(ActionEvent actionEvent) {
+    public void btnConfirmEditsOnAction(ActionEvent actionEvent) throws Exception {
         try {
             if (!existReservation(selectedRegId)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such reservation associated with the id " + selectedRegId ).show();
@@ -341,6 +341,7 @@ public class SearchRegistrationFormController {
             e.printStackTrace();
         }
         btnConfirmEdits.setDisable(true);
+        cancelSearching();
     }
 
     private void cancelSearching() throws Exception {

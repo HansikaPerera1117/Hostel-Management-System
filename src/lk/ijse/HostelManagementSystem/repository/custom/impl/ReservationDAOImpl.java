@@ -89,7 +89,7 @@ public class ReservationDAOImpl implements ReservationDAO {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
-        String hql ="FROM Reservation ";
+        String hql ="FROM Reservation";
         Query query = session.createQuery(hql);
         List<Reservation> reservationList = query.list();
 
