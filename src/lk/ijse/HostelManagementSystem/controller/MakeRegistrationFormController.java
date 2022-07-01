@@ -30,6 +30,7 @@ import lk.ijse.HostelManagementSystem.entity.Student;
 import lk.ijse.HostelManagementSystem.validation.ValidationUtil;
 import lk.ijse.HostelManagementSystem.view.tm.ReservationTM;
 import org.controlsfx.control.Notifications;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -70,7 +71,7 @@ public class MakeRegistrationFormController {
 
     private String ResID;
 
-    public void initialize(){
+    public void initialize() {
 
         cmbStudentID.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             enableOrDisableAddReservationButton();
@@ -92,7 +93,7 @@ public class MakeRegistrationFormController {
 
         //-----------------validation-------------------------------------
         Pattern paymentPattern = Pattern.compile("^[1-9][0-9]*(.[0-9]{1,2})?$");
-        map.put(txtPayment,paymentPattern);
+        map.put(txtPayment, paymentPattern);
 
 
         loadDateAndTime();
@@ -105,14 +106,14 @@ public class MakeRegistrationFormController {
 
     private void loadAllRoomIds() throws Exception {
         List<RoomDTO> allRooms = reservationBO.getAllRooms();
-        for (RoomDTO dto:allRooms) {
+        for (RoomDTO dto : allRooms) {
             cmbRoomTypeID.getItems().add(dto.getRoom_type_id());
         }
     }
 
     private void loadAllStudentIds() throws Exception {
         List<StudentDTO> allStudents = reservationBO.getAllStudents();
-        for (StudentDTO dto:allStudents) {
+        for (StudentDTO dto : allStudents) {
             cmbStudentID.getItems().add(dto.getStudent_id());
         }
     }
@@ -125,7 +126,7 @@ public class MakeRegistrationFormController {
                 }
 
                 List<RoomDTO> roomDTOList = reservationBO.searchRoom(selectedRoomId + "");
-                for (RoomDTO dto:roomDTOList) {
+                for (RoomDTO dto : roomDTOList) {
                     txtRoomType.setText(dto.getType());
                     txtKeyMoney.setText(dto.getKey_money());
                     txtStatus.setEditable(false);
@@ -147,19 +148,19 @@ public class MakeRegistrationFormController {
 
     private void setStudentDetails(String selectedStudentId) {
         if (selectedStudentId != null) {
-                try {
-                    if (!existStudent(selectedStudentId + "")) {
-                        new Alert(Alert.AlertType.ERROR, "There is no such student associated with the id " + selectedStudentId + "").show();
-                    }else {
-                        List<StudentDTO> studentDTOList = reservationBO.searchStudent(selectedStudentId + "");
-                        for (StudentDTO dto : studentDTOList) {
-                            txtStudentName.setText(dto.getName());
-                        }
+            try {
+                if (!existStudent(selectedStudentId + "")) {
+                    new Alert(Alert.AlertType.ERROR, "There is no such student associated with the id " + selectedStudentId + "").show();
+                } else {
+                    List<StudentDTO> studentDTOList = reservationBO.searchStudent(selectedStudentId + "");
+                    for (StudentDTO dto : studentDTOList) {
+                        txtStudentName.setText(dto.getName());
                     }
-                } catch (Exception e) {
-                    new Alert(Alert.AlertType.ERROR, "Failed to find the student " + selectedStudentId + "" + e).show();
-                    e.printStackTrace();
                 }
+            } catch (Exception e) {
+                new Alert(Alert.AlertType.ERROR, "Failed to find the student " + selectedStudentId + "" + e).show();
+                e.printStackTrace();
+            }
         } else {
             txtStudentName.clear();
         }
@@ -202,16 +203,16 @@ public class MakeRegistrationFormController {
             List<RoomDTO> allRooms = reservationBO.getAllRooms();
             for (RoomDTO allRoom : allRooms) {
                 String room_type_id = allRoom.getRoom_type_id();
-                if (room_type_id.equals(lblNonACRoom.getText())){
+                if (room_type_id.equals(lblNonACRoom.getText())) {
                     lblNonACRoomCount.setText(String.valueOf(allRoom.getAvailableRoomQty()));
                 }
-                if (room_type_id.equals(lblNonACFoodRoom.getText())){
+                if (room_type_id.equals(lblNonACFoodRoom.getText())) {
                     lblNonACFoodRoomCount.setText(String.valueOf(allRoom.getAvailableRoomQty()));
                 }
-                if (room_type_id.equals(lblACRoom.getText())){
+                if (room_type_id.equals(lblACRoom.getText())) {
                     lblACRoomCount.setText(String.valueOf(allRoom.getAvailableRoomQty()));
                 }
-                if (room_type_id.equals(lblACFoodRoom.getText())){
+                if (room_type_id.equals(lblACFoodRoom.getText())) {
                     lblACFoodRoomCount.setText(String.valueOf(allRoom.getAvailableRoomQty()));
                 }
             }
@@ -224,9 +225,9 @@ public class MakeRegistrationFormController {
         double payment = Double.parseDouble(txtPayment.getText());
         double keyMoney = Double.parseDouble(txtKeyMoney.getText());
         double status = keyMoney - payment;
-        if (status == 0){
+        if (status == 0) {
             txtStatus.setText("paid");
-        }else {
+        } else {
             txtStatus.setText(status + " is payable");
         }
         btnAddReservation.setDisable(false);
@@ -239,21 +240,21 @@ public class MakeRegistrationFormController {
 
         try {
             List<StudentDTO> studentDTOList = reservationBO.searchStudent(studentId);
-            for (StudentDTO dto :studentDTOList) {
-                Student student = new Student(dto.getStudent_id(),dto.getName(),dto.getAddress(),dto.getContact_no(),dto.getDob(),dto.getGender());
+            for (StudentDTO dto : studentDTOList) {
+                Student student = new Student(dto.getStudent_id(), dto.getName(), dto.getAddress(), dto.getContact_no(), dto.getDob(), dto.getGender());
 
                 List<RoomDTO> roomDTOList = reservationBO.searchRoom(roomId);
-                for (RoomDTO dto1 :roomDTOList) {
-                    Room room = new Room(dto1.getRoom_type_id(),dto1.getType(),dto1.getKey_money(),dto1.getQty(),dto1.getAvailableRoomQty());
+                for (RoomDTO dto1 : roomDTOList) {
+                    Room room = new Room(dto1.getRoom_type_id(), dto1.getType(), dto1.getKey_money(), dto1.getQty(), dto1.getAvailableRoomQty());
 
-                    if (reservationBO.addReservation(new ReservationDTO(ResID,LocalDate.now(),student,room,status))){
+                    if (reservationBO.addReservation(new ReservationDTO(ResID, LocalDate.now(), student, room, status))) {
                         new Alert(Alert.AlertType.INFORMATION, "Reservation has been added successfully").show();
 
                         Notifications notifications = Notifications.create().title("Add Reservation Successful !").text("Reservation has been added successfully...").hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
                         notifications.darkStyle();
                         notifications.show();
 
-                    }else {
+                    } else {
                         new Alert(Alert.AlertType.ERROR, "Reservation has not been added successfully").show();
                     }
                 }
@@ -275,18 +276,19 @@ public class MakeRegistrationFormController {
     }
 
     public void btnCancelOnAction(ActionEvent actionEvent) throws Exception {
-       cancel();
+        cancel();
     }
 
     public void btnAddNewStudentOnAction(ActionEvent actionEvent) throws IOException {
-        setUI(makeRegistrationContext,"studentForm");
+        setUI(makeRegistrationContext, "studentForm");
     }
 
     public void textFields_Key_Released(KeyEvent keyEvent) {
-        ValidationUtil.validate(map,btnAddReservation);
+        ValidationUtil.validate(map, btnAddReservation);
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
-            Object response =  ValidationUtil.validate(map,btnAddReservation);;
+            Object response = ValidationUtil.validate(map, btnAddReservation);
+            ;
 
             if (response instanceof TextField) {
                 TextField textField = (TextField) response;
@@ -296,23 +298,23 @@ public class MakeRegistrationFormController {
     }
 
     public void backToDashBoardOnAction(MouseEvent event) throws IOException {
-        setUI(makeRegistrationContext,"DashBoardForm");
+        setUI(makeRegistrationContext, "DashBoardForm");
     }
 
     public void setUI(AnchorPane ap, String location) throws IOException {
         Stage stage = (Stage) ap.getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/lk/ijse/HostelManagementSystem/view/"+location+".fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/lk/ijse/HostelManagementSystem/view/" + location + ".fxml"))));
         stage.setTitle(location);
         stage.centerOnScreen();
     }
 
     private void loadDateAndTime() {
         /* set date*/
-        lblDate.setText("Date :"+new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        lblDate.setText("Date :" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         /*set time*/
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             LocalTime currentTime = LocalTime.now();
-            lblTime.setText("Time :"+currentTime.getHour() + ":" + currentTime.getMinute() + ":" + currentTime.getSecond());
+            lblTime.setText("Time :" + currentTime.getHour() + ":" + currentTime.getMinute() + ":" + currentTime.getSecond());
         }), new KeyFrame(Duration.seconds(1))
         );
         clock.setCycleCount(Animation.INDEFINITE);
